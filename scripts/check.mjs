@@ -2,7 +2,7 @@
 // Jalankan: node scripts/check.mjs
 import { readFileSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
-const files = ['js/core.js', ...readdirSync('js/games').map(f => 'js/games/' + f), 'js/main.js'];
+const files = ['js/core.js', 'js/i18n.js', ...readdirSync('js/games').map(f => 'js/games/' + f), 'js/main.js'];
 let bad = 0;
 const seen = new Map();
 for (const f of files) {

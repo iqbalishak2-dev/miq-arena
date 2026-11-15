@@ -220,18 +220,18 @@ function drawRun(R){
   for (const it of items) { if (it.z >= 0.6) continue; drawItem(R, it, X, Y, S, LW); }
   // pop teks
   ctx.textAlign = 'center';
-  R.pops.forEach(p => { ctx.globalAlpha = Math.max(0, 1 - p.t/0.9); ctx.font = `900 ${Math.round(W*0.075)}px Geist, sans-serif`; ctx.lineWidth = 5; ctx.strokeStyle = '#0a0a0a'; ctx.strokeText(p.txt, W/2, H*0.42 - p.t*40); ctx.fillStyle = p.c; ctx.fillText(p.txt, W/2, H*0.42 - p.t*40); });
+  R.pops.forEach(p => { ctx.globalAlpha = Math.max(0, 1 - p.t/0.9); ctx.font = `900 ${Math.round(W*0.075)}px Geist, sans-serif`; ctx.lineWidth = 5; ctx.strokeStyle = '#0a0a0a'; const pt = tr(p.txt); ctx.strokeText(pt, W/2, H*0.42 - p.t*40); ctx.fillStyle = p.c; ctx.fillText(pt, W/2, H*0.42 - p.t*40); });
   ctx.globalAlpha = 1;
   if (R.state === 'count') {
     ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.fillRect(0,0,W,H);
     ctx.font = `900 ${Math.round(W*0.28)}px Geist, sans-serif`; ctx.lineWidth = 8; ctx.strokeStyle = '#0a0a0a';
-    const ct = Math.ceil(R.countT) > 0 ? String(Math.ceil(R.countT)) : 'LARI!';
+    const ct = Math.ceil(R.countT) > 0 ? String(Math.ceil(R.countT)) : tr('LARI!');
     ctx.strokeText(ct, W/2, H*0.52); ctx.fillStyle = '#f5c400'; ctx.fillText(ct, W/2, H*0.52);
-    ctx.fillStyle = '#0a0a0a'; ctx.font = `600 ${Math.round(W*0.042)}px Geist, sans-serif`; ctx.fillText('Leret untuk bergerak · ketik untuk tendang', W/2, H*0.64);
+    ctx.fillStyle = '#0a0a0a'; ctx.font = `600 ${Math.round(W*0.042)}px Geist, sans-serif`; ctx.fillText(tr('Leret untuk bergerak · ketik untuk tendang'), W/2, H*0.64);
   }
   if (R.paused) {
     ctx.fillStyle = 'rgba(255,255,255,.75)'; ctx.fillRect(0,0,W,H);
-    ctx.fillStyle = '#0a0a0a'; ctx.font = `700 ${Math.round(W*0.06)}px Geist, sans-serif`; ctx.fillText('Rehat. Ketik untuk sambung', W/2, H/2);
+    ctx.fillStyle = '#0a0a0a'; ctx.font = `700 ${Math.round(W*0.06)}px Geist, sans-serif`; ctx.fillText(tr('Rehat. Ketik untuk sambung'), W/2, H/2);
   }
 }
 function drawItem(R, it, X, Y, S, LW){

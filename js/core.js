@@ -267,7 +267,7 @@ const BADGES = [
 
 // ================= Simpanan (telefon ini sahaja) =================
 const KEY = 'miq-arena-v1';
-const fresh = () => ({settings:{sound:true, vib:true}, profile:null, xp:0, rounds:0, days:{}, badges:{}, last:'matsogi', mats:{unlocked:0, best:{}, bestRt:null, plays:0, passedTop:false}, kyok:{unlocked:0, best:{}, plays:0, passedTop:false}, kuiz:{unlocked:0, best:{}, plays:0, passedTop:false}, memo:{unlocked:0, best:{}, plays:0, passedTop:false}, sim:{unlocked:0, best:{}, plays:0, passedTop:false}, belt:{unlocked:0, best:{}, plays:0, passedTop:false}, run:{best:0, bestStars:0, plays:0, totalM:0}, duel:{plays:0, fastest:null, p2:'Lawan'}, tarik:{plays:0, bestRate:0}, klumba:{plays:0, perfect:0}, serang:{plays:0, blocks:0}, tgk:{unlocked:0, best:{}, plays:0, passedTop:false}});
+const fresh = () => ({settings:{sound:true, vib:true, lang:'ms'}, profile:null, xp:0, rounds:0, days:{}, badges:{}, last:'matsogi', mats:{unlocked:0, best:{}, bestRt:null, plays:0, passedTop:false}, kyok:{unlocked:0, best:{}, plays:0, passedTop:false}, kuiz:{unlocked:0, best:{}, plays:0, passedTop:false}, memo:{unlocked:0, best:{}, plays:0, passedTop:false}, sim:{unlocked:0, best:{}, plays:0, passedTop:false}, belt:{unlocked:0, best:{}, plays:0, passedTop:false}, run:{best:0, bestStars:0, plays:0, totalM:0}, duel:{plays:0, fastest:null, p2:'Lawan'}, tarik:{plays:0, bestRate:0}, klumba:{plays:0, perfect:0}, serang:{plays:0, blocks:0}, tgk:{unlocked:0, best:{}, plays:0, passedTop:false}});
 let S = fresh(), storeOK = true;
 try {
   const raw = localStorage.getItem(KEY);
@@ -468,7 +468,7 @@ function viewRekod(){
   const m = S.mats;
   const recRows = LEVELS.filter(L => m.best[L.id]).map(L => {
     const b = m.best[L.id], dt = new Date(b.date);
-    return `<div class="trow"><div style="display:flex;align-items:center;gap:10px"><span class="belt" style="width:28px;height:8px;background:${L.col}"></span><div style="display:flex;flex-direction:column"><b>${L.nm}</b><span class="muted" style="font-size:12px">${b.avg} ms · ${dt.toLocaleDateString('ms-MY',{day:'numeric',month:'short'})}</span></div></div><b>${fmt(b.score)}</b></div>`;
+    return `<div class="trow"><div style="display:flex;align-items:center;gap:10px"><span class="belt" style="width:28px;height:8px;background:${L.col}"></span><div style="display:flex;flex-direction:column"><b>${L.nm}</b><span class="muted" style="font-size:12px">${b.avg} ms · ${dt.toLocaleDateString(dateLocale(),{day:'numeric',month:'short'})}</span></div></div><b>${fmt(b.score)}</b></div>`;
   }).join('') || '<div class="trow"><span class="muted">Belum ada rekod. Main pusingan pertama anda!</span></div>';
   app.innerHTML = header() + `<main>
     <div style="display:flex;flex-direction:column;gap:4px">
@@ -541,14 +541,14 @@ function viewRekod(){
       <h2 style="padding:16px 20px 10px;font-size:18px;font-weight:700">Kyokpa Timing: rekod terbaik</h2>
       <div class="thead label"><span>Tahap</span><span>Markah</span></div>
       ${KLEVELS.filter(L => S.kyok.best[L.id]).map(L => { const b = S.kyok.best[L.id], dt = new Date(b.date);
-        return `<div class="trow"><div style="display:flex;align-items:center;gap:10px"><span class="belt" style="width:28px;height:8px;background:${L.col}"></span><div style="display:flex;flex-direction:column"><b>${L.nm}</b><span class="muted" style="font-size:12px">${b.broken}/${L.sets} pecah · ${dt.toLocaleDateString('ms-MY',{day:'numeric',month:'short'})}</span></div></div><b>${fmt(b.score)}</b></div>`; }).join('')
+        return `<div class="trow"><div style="display:flex;align-items:center;gap:10px"><span class="belt" style="width:28px;height:8px;background:${L.col}"></span><div style="display:flex;flex-direction:column"><b>${L.nm}</b><span class="muted" style="font-size:12px">${b.broken}/${L.sets} pecah · ${dt.toLocaleDateString(dateLocale(),{day:'numeric',month:'short'})}</span></div></div><b>${fmt(b.score)}</b></div>`; }).join('')
         || '<div class="trow"><span class="muted">Belum ada rekod.</span></div>'}
     </section>
     <section class="card" style="padding:0;overflow:hidden">
       <h2 style="padding:16px 20px 10px;font-size:18px;font-weight:700">Kuiz Asas: rekod terbaik</h2>
       <div class="thead label"><span>Tahap</span><span>Betul</span></div>
       ${QLEVELS.filter(L => S.kuiz.best[L.id]).map(L => { const b = S.kuiz.best[L.id], dt = new Date(b.date);
-        return `<div class="trow"><div style="display:flex;align-items:center;gap:10px"><span class="belt" style="width:28px;height:8px;background:${L.col}"></span><div style="display:flex;flex-direction:column"><b>${L.nm}</b><span class="muted" style="font-size:12px">${fmt(b.score)} markah · ${dt.toLocaleDateString('ms-MY',{day:'numeric',month:'short'})}</span></div></div><b>${b.correct}/${QN}</b></div>`; }).join('')
+        return `<div class="trow"><div style="display:flex;align-items:center;gap:10px"><span class="belt" style="width:28px;height:8px;background:${L.col}"></span><div style="display:flex;flex-direction:column"><b>${L.nm}</b><span class="muted" style="font-size:12px">${fmt(b.score)} markah · ${dt.toLocaleDateString(dateLocale(),{day:'numeric',month:'short'})}</span></div></div><b>${b.correct}/${QN}</b></div>`; }).join('')
         || '<div class="trow"><span class="muted">Belum ada rekod.</span></div>'}
     </section>
     <section class="card" style="padding:0;overflow:hidden">
@@ -589,6 +589,7 @@ function viewProfil(first){
     const nameVal = (document.getElementById('nama')||{}).value ?? p.nama;
     app.innerHTML = header() + `<main>
       <div style="display:flex;flex-direction:column;gap:4px">
+        ${first ? langPicker() : ''}
         <div class="ptitle"><h1>${first ? 'Selamat datang!' : 'Profil pemain'}</h1></div>
         <p class="muted" style="margin:0 0 0 14px">${first ? 'Isi profil sekali. Ia dikongsi oleh semua game MIQ Arena.' : 'Diisi sekali, dikongsi oleh semua game.'}</p>
       </div>
@@ -626,6 +627,7 @@ function viewProfil(first){
       document.getElementById('avb').textContent = initials(inp.value);
       document.getElementById('nmb').textContent = inp.value || 'Nama anda';
     };
+    bindLang(draw);
     app.querySelectorAll('[data-belt]').forEach(b => b.onclick = () => { st.belt = b.dataset.belt; draw(); });
     app.querySelectorAll('[data-br]').forEach(b => b.onclick = () => { st.branch = b.dataset.br; draw(); });
     document.getElementById('pf').onsubmit = e => { e.preventDefault(); doSave(); };
@@ -670,6 +672,7 @@ function viewTetapan(confirm){
   else install = `<div class="trow"><span>Buka menu browser (⋮), kemudian pilih <b>Pasang app</b> atau <b>Tambah ke skrin utama</b>.</span></div>`;
   app.innerHTML = header() + `<main>
     <div class="ptitle"><h1>Tetapan</h1></div>
+    ${langPicker()}
     <section class="card" style="padding:0;overflow:hidden">
       <h2 style="padding:16px 20px 6px;font-size:16px;font-weight:700">Bunyi dan getaran</h2>
       ${sw('tSound', st.sound, 'Bunyi', 'Nada dalam Ikut Sabum')}
@@ -698,6 +701,7 @@ function viewTetapan(confirm){
     ${ctaCard()}
     <p class="muted" style="margin:0;text-align:center;font-size:12px">MIQ Arena v1.0 · MIQ Taekwon-Do Academy</p>
   </main>` + nav('profil');
+  bindLang(() => viewTetapan());
   document.getElementById('tSound').onclick = () => { st.sound = !st.sound; save(); viewTetapan(); };
   document.getElementById('tVib').onclick = () => { st.vib = !st.vib; save(); if (st.vib) buzz(30); viewTetapan(); };
   const di = document.getElementById('doInstall');
@@ -707,3 +711,22 @@ function viewTetapan(confirm){
   const y = document.getElementById('yesReset'); if (y) y.onclick = () => { S = fresh(); save(); location.hash = 'profil'; route(); };
   window.scrollTo(0,0);
 }
+
+// ================= Pilihan bahasa =================
+function langPicker(){
+  const L = S.settings.lang || 'ms';
+  return `<section class="card" style="display:flex;flex-direction:column;gap:10px;padding:16px 20px">
+    <span class="label">Bahasa / Language</span>
+    <div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <button type="button" class="chip ${L==='ms'?'on':''}" data-lang="ms" aria-pressed="${L==='ms'}">Bahasa Melayu</button>
+      <button type="button" class="chip ${L==='en'?'on':''}" data-lang="en" aria-pressed="${L==='en'}">English</button>
+    </div>
+  </section>`;
+}
+function bindLang(redraw){
+  app.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => {
+    if (S.settings.lang === b.dataset.lang) return;
+    S.settings.lang = b.dataset.lang; save(); redraw(); applyLang();
+  });
+}
+const dateLocale = () => (S.settings && S.settings.lang === 'en') ? 'en-GB' : 'ms-MY';
