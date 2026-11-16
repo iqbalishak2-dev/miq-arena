@@ -1,12 +1,12 @@
 # MIQ Arena · Taekwon-Do Games
 
-Hub game untuk pelajar **MIQ Taekwon-Do Academy** (ITF). 12 game, main sendiri atau berdua di satu telefon. Percuma, tanpa akaun. Semua rekod disimpan dalam telefon pemain sahaja.
+Hub game untuk pelajar **MIQ Taekwon-Do Academy** (ITF). 13 game, main sendiri atau berdua di satu telefon. Percuma, tanpa akaun. Semua rekod disimpan dalam telefon pemain sahaja.
 
 ## Game
 
 | Main sendiri | Main berdua |
 |---|---|
-| Matsogi Reflex, Dojang Run, Kyokpa Timing, Kuiz Asas, Memori Padan, Ikut Sabum, Susun Tali Pinggang, Tangkis! | Duel Refleks, Tarik Tali, Kyokpa Lumba, Serang & Tangkis |
+| Matsogi Reflex, Dojang Run, Kyokpa Timing, Kuiz Asas, Memori Padan, Ikut Sabum, Susun Tali Pinggang, Tangkis!, Flying Kick Dash | Duel Refleks, Tarik Tali, Kyokpa Lumba, Serang & Tangkis |
 
 Ciri lain: profil (nama panggilan), XP dan Pangkat Arena, lencana, Cabaran Harian, rekod 7 hari, tetapan bunyi/getaran, app boleh dipasang (PWA) dan dibuka tanpa internet.
 

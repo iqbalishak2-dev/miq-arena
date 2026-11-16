@@ -22,8 +22,9 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 
 // ================= Notifikasi kemas kini =================
 // Tukar APP_VER dan WHATS_NEW setiap kali keluarkan versi baru (sama dengan VERSION dalam sw.js).
-const APP_VER = '1.6.3';
+const APP_VER = '1.7.0';
 const WHATS_NEW = [
+  'Game baharu: Flying Kick Dash! Tendang melompat, lalu celah pad dan naikkan tali pinggang',
   'Paparan penuh untuk tablet kecil (contoh Xiaomi/Redmi Pad 8–9 inci)',
   'Papan markah ikut kelas. Sabum boleh tambah kelas dalam Mod Sabum (Tetapan)',
   'Papan markah: tulis nama dalam pop up selepas tamat game',

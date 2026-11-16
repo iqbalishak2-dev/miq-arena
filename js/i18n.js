@@ -359,6 +359,23 @@ const I18N = {
   'Tulis nama selepas tamat game & papan markah 10 teratas': 'Type your name after a game & top 10 leaderboard',
   'Setiap game ada penerangan "Kenapa main game ini?"': 'Every game explains "Why play this game?"',
   '/saat': '/sec', 'Bahasa': 'Language', 'Pilih bahasa app': 'Choose the app language',
+  // ---- Flying Kick Dash ----
+  'Tendang melompat, lalu celah pad': 'Flying kick through the pad gaps', 'Masa & rentak': 'Timing & rhythm', 'Fokus': 'Focus',
+  'Melatih rentak dan kawalan masa. Tendangan melompat yang baik perlukan tenaga yang terkawal, bukan sekadar kuat.': 'Trains rhythm and timing control. A good flying kick needs controlled power, not just strength.',
+  'Ketik skrin untuk tendangan melompat. Lalu celah antara pad tanpa terlanggar. Tali pinggang anda naik bila markah bertambah.': 'Tap the screen to do a flying kick. Pass through the gaps between pads without crashing. Your belt goes up as your score rises.',
+  'Tali pinggang': 'Belt', 'skrin': 'the screen', 'Tendangan melompat': 'Flying kick', 'Lalu': 'Pass the', 'celah': 'gap', 'antara pad': 'between pads',
+  '+# markah': '+# point', 'Tekan': 'Press', 'Perisai # saat': '# sec shield', 'DIMAIN': 'PLAYED', 'Rekod #': 'Record #', 'rekod #': 'record #',
+  'Kawasan game. Ketik untuk melompat.': 'Game area. Tap to jump.', 'Kiai, perisai sekejap': 'Kiai, short shield',
+  'Ketik untuk mula': 'Tap to start', 'Ketik untuk sambung': 'Tap to resume', 'Tamat': 'Finished', 'Celah dilalui': 'Gaps passed', '# celah': '# gaps',
+  'Rekod anda: # celah. Boleh lebih tinggi?': 'Your record: # gaps. Can you go higher?', 'Tendang melompat dan lalu celah pad!': 'Flying kick through the pad gaps!',
+  'Petua: jangan ketik terlalu laju. Ketik sekali-sekala dan biarkan badan jatuh sedikit sebelum ketik lagi.': 'Tip: do not tap too fast. Tap now and then and let your body drop a little before tapping again.',
+  'Petua: guna butang KIAI! bila celah nampak terlalu sempit. Perisai melindungi anda selama # saat.': 'Tip: use the KIAI! button when a gap looks too narrow. The shield protects you for # seconds.',
+  'Hebat! Kekal tenang dan ikut rentak, macam tendangan melompat yang terkawal.': 'Great! Stay calm and keep the rhythm, like a controlled flying kick.',
+  'Tendangan terbang': 'Flying kick', 'Terbang tali hitam': 'Black belt flyer',
+  'Flying Kick Dash: lalu # celah': 'Flying Kick Dash: pass # gaps', 'Flying Kick Dash: capai tali pinggang Hijau (# celah)': 'Flying Kick Dash: reach Green belt (# gaps)',
+  'Nada dalam Ikut Sabum dan Flying Kick Dash': 'Tones in Follow Sabum and Flying Kick Dash',
+  'Game baharu: Flying Kick Dash! Tendang melompat, lalu celah pad dan naikkan tali pinggang': 'New game: Flying Kick Dash! Flying kick through pad gaps and raise your belt',
+  'Tali pinggang Putih': 'White belt', '# lagi untuk Putih': '# more for White', 'Tali pinggang Kuning': 'Yellow belt', '# lagi untuk Kuning': '# more for Yellow', 'Tali pinggang Hijau': 'Green belt', '# lagi untuk Hijau': '# more for Green', 'Tali pinggang Biru': 'Blue belt', '# lagi untuk Biru': '# more for Blue', 'Tali pinggang Merah': 'Red belt', '# lagi untuk Merah': '# more for Red', 'Tali pinggang Hitam': 'Black belt', '# lagi untuk Hitam': '# more for Black',
 };
 
 // Corak untuk teks yang mengandungi nama atau perkataan berubah. (bahagian dalam kurungan diterjemah semula)

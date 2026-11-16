@@ -362,7 +362,7 @@ nav.bn svg{width:18px;height:18px}
 @media (min-width:700px){
   #app{max-width:1024px}
   /* skrin permainan guna seluruh lebar skrin */
-  #app:has(.dplay),#app:has(.rplay),#app:has(.play),#app:has(.kplay),#app:has(.splay),#app:has(.tgplay){max-width:none}
+  #app:has(.dplay),#app:has(.rplay),#app:has(.play),#app:has(.kplay),#app:has(.splay),#app:has(.tgplay),#app:has(.fkplay){max-width:none}
   .top{padding:18px 28px}
   main{max-width:720px;width:100%;margin:0 auto;padding:24px 20px}
   main.wide{max-width:1000px}
@@ -450,3 +450,14 @@ nav.bn svg{width:18px;height:18px}
 .updwrap{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:20px}
 .updnew{max-width:420px;width:100%;display:flex;flex-direction:column;gap:12px;padding:22px;animation:updIn .3s ease-out}
 .updnew ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:20px}
+
+/* ================= Flying Kick Dash ================= */
+.fkplay{display:flex;flex-direction:column;background:var(--ink);color:#fff;height:100vh;height:100dvh;padding:10px 10px 12px;gap:8px;overflow:hidden}
+.fktop{display:flex;justify-content:space-between;align-items:center;padding:0 4px}
+.fktop .k{font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.55);font-weight:600}
+.fktop .v{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;color:var(--y)}
+#fkwrap{flex:1;position:relative;border-radius:16px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;min-height:300px}
+#fkcv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.fkkiai{min-height:64px;border-radius:14px;border:2px solid var(--y);background:#1a1a1a;color:var(--y);font-size:20px;font-weight:900;letter-spacing:.06em;display:flex;align-items:center;justify-content:center;gap:10px;touch-action:none}
+.fkkiai small{font-size:13px;font-weight:600;opacity:.8}
+.fkkiai.ready{background:linear-gradient(180deg,var(--y1),var(--y));color:#0a0a0a;box-shadow:var(--glow)}

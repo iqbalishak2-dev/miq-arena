@@ -48,6 +48,7 @@ const RANKS = [
 const GAMES = [
   {id:'matsogi', nm:'Matsogi Reflex', d:'Serang Chong, elak Hong', icon:'zap', ready:true, store:'mats', why:['Refleks', 'Disiplin'], wd:"Melatih masa reaksi dan kawalan diri. Dalam sparring, kita serang bila ada peluang, bukan setiap kali lawan bergerak."},
   {id:'run', nm:'Dojang Run', d:'Lari, lompat dan tendang papan', icon:'feet', ready:true, store:'run', why:['Ketangkasan', 'Koordinasi'], wd:"Melatih mata dan tangan bekerjasama dengan pantas, serta kekal fokus walaupun semakin laju."},
+  {id:'kick', nm:'Flying Kick Dash', d:'Tendang melompat, lalu celah pad', icon:'zap', ready:true, store:'kick', why:['Masa & rentak', 'Fokus'], wd:"Melatih rentak dan kawalan masa. Tendangan melompat yang baik perlukan tenaga yang terkawal, bukan sekadar kuat."},
   {id:'duel', nm:'Duel Refleks', d:'Siapa tekan dahulu bila SIJAK!', icon:'zap', ready:true, store:'duel', mp:true, why:['Refleks', 'Sportsmanship'], wd:"Melatih reaksi pantas pada arahan Sijak, dan cara menang atau kalah dengan hormat."},
   {id:'tarik', nm:'Tarik Tali', d:'Tarik tali pinggang hitam ke pihak anda', icon:'feet', ready:true, store:'tarik', mp:true, why:['Stamina', 'Semangat'], wd:"Melatih kelajuan dan tahan lasak. Jangan putus asa sehingga tamat, macam semangat Indomitable Spirit."},
   {id:'klumba', nm:'Kyokpa Lumba', d:'Siapa paling tepat memecah papan', icon:'target', ready:true, store:'klumba', mp:true, why:['Ketepatan masa', 'Tenang'], wd:"Melatih timing yang tepat walaupun dalam tekanan pertandingan."},
@@ -163,6 +164,8 @@ const DAILY_POOL = [
   {id:'r1', g:'run', t:'Dojang Run: lari sejauh 300 m', xp:60, test:r => r.game==='run' && r.m >= 300},
   {id:'r2', g:'run', t:'Dojang Run: lari sejauh 600 m', xp:90, test:r => r.game==='run' && r.m >= 600},
   {id:'r3', g:'run', t:'Dojang Run: tendang 3 papan dalam satu larian', xp:70, test:r => r.game==='run' && r.boards >= 3},
+  {id:'f1', g:'kick', t:'Flying Kick Dash: lalu 5 celah', xp:50, test:r => r.game==='kick' && r.score >= 5},
+  {id:'f2', g:'kick', t:'Flying Kick Dash: capai tali pinggang Hijau (12 celah)', xp:80, test:r => r.game==='kick' && r.score >= 12},
   {id:'k1', g:'kyokpa', t:'Kyokpa Timing: 3 Sempurna dalam satu pusingan', xp:60, test:r => r.game==='kyokpa' && r.perfect >= 3},
   {id:'k2', g:'kyokpa', t:'Kyokpa Timing: pecahkan 6 set papan', xp:70, test:r => r.game==='kyokpa' && r.broken >= 6},
   {id:'q1', g:'kuiz', t:'Kuiz Asas: dapat 8/10 atau lebih', xp:60, test:r => r.game==='kuiz' && r.correct >= 8},
@@ -259,6 +262,8 @@ const BADGES = [
   {id:'st1',    nm:'Serang & Tangkis pertama', test:s => s.serang.plays >= 1},
   {id:'tg100',  nm:'Perisai besi',    test:(s,r) => r && r.game==='tangkis' && r.blocked === r.n},
   {id:'tgtop',  nm:'Pakar tangkisan', test:s => s.tgk.passedTop === true},
+  {id:'fk10',  nm:'Tendangan terbang', test:(s,r) => r && r.game==='kick' && r.score >= 10},
+  {id:'fk45',  nm:'Terbang tali hitam', test:(s,r) => r && r.game==='kick' && r.score >= 45},
   {id:'rk10',   nm:'Pemecah papan',   test:(s,r) => r && r.game==='run' && r.boards >= 10},
   {id:'streak3',nm:'Streak 3 hari',   test:s => dayStreak(s) >= 3},
   {id:'rajin',  nm:'Rajin berlatih',  test:s => s.rounds >= 20},
@@ -273,11 +278,11 @@ const BADGES = [
 
 // ================= Simpanan (telefon ini sahaja) =================
 const KEY = 'miq-arena-v1';
-const fresh = () => ({settings:{sound:true, vib:true, lang:'ms'}, profile:null, xp:0, rounds:0, days:{}, badges:{}, last:'matsogi', mats:{unlocked:0, best:{}, bestRt:null, plays:0, passedTop:false}, kyok:{unlocked:0, best:{}, plays:0, passedTop:false}, kuiz:{unlocked:0, best:{}, plays:0, passedTop:false}, memo:{unlocked:0, best:{}, plays:0, passedTop:false}, sim:{unlocked:0, best:{}, plays:0, passedTop:false}, belt:{unlocked:0, best:{}, plays:0, passedTop:false}, run:{best:0, bestStars:0, plays:0, totalM:0, chase:{harimau:0, sabeum:0}}, duel:{plays:0, fastest:null, p2:'Lawan'}, tarik:{plays:0, bestRate:0}, klumba:{plays:0, perfect:0}, serang:{plays:0, blocks:0}, tgk:{unlocked:0, best:{}, plays:0, passedTop:false}, lb:{}, lbNames:[], classes:[], curClass:'', sabumPin:''});
+const fresh = () => ({settings:{sound:true, vib:true, lang:'ms'}, profile:null, xp:0, rounds:0, days:{}, badges:{}, last:'matsogi', mats:{unlocked:0, best:{}, bestRt:null, plays:0, passedTop:false}, kyok:{unlocked:0, best:{}, plays:0, passedTop:false}, kuiz:{unlocked:0, best:{}, plays:0, passedTop:false}, memo:{unlocked:0, best:{}, plays:0, passedTop:false}, sim:{unlocked:0, best:{}, plays:0, passedTop:false}, belt:{unlocked:0, best:{}, plays:0, passedTop:false}, run:{best:0, bestStars:0, plays:0, totalM:0, chase:{harimau:0, sabeum:0}}, duel:{plays:0, fastest:null, p2:'Lawan'}, tarik:{plays:0, bestRate:0}, klumba:{plays:0, perfect:0}, serang:{plays:0, blocks:0}, tgk:{unlocked:0, best:{}, plays:0, passedTop:false}, kick:{best:0, plays:0}, lb:{}, lbNames:[], classes:[], curClass:'', sabumPin:''});
 let S = fresh(), storeOK = true;
 try {
   const raw = localStorage.getItem(KEY);
-  if (raw) { const o = JSON.parse(raw); S = Object.assign(fresh(), o); S.settings = Object.assign(fresh().settings, o.settings || {}); S.mats = Object.assign(fresh().mats, o.mats || {}); S.kyok = Object.assign(fresh().kyok, o.kyok || {}); S.kuiz = Object.assign(fresh().kuiz, o.kuiz || {}); S.memo = Object.assign(fresh().memo, o.memo || {}); S.sim = Object.assign(fresh().sim, o.sim || {}); S.belt = Object.assign(fresh().belt, o.belt || {}); S.run = Object.assign(fresh().run, o.run || {}); S.duel = Object.assign(fresh().duel, o.duel || {}); S.tarik = Object.assign(fresh().tarik, o.tarik || {}); S.klumba = Object.assign(fresh().klumba, o.klumba || {}); S.serang = Object.assign(fresh().serang, o.serang || {}); S.tgk = Object.assign(fresh().tgk, o.tgk || {}); }
+  if (raw) { const o = JSON.parse(raw); S = Object.assign(fresh(), o); S.settings = Object.assign(fresh().settings, o.settings || {}); S.mats = Object.assign(fresh().mats, o.mats || {}); S.kyok = Object.assign(fresh().kyok, o.kyok || {}); S.kuiz = Object.assign(fresh().kuiz, o.kuiz || {}); S.memo = Object.assign(fresh().memo, o.memo || {}); S.sim = Object.assign(fresh().sim, o.sim || {}); S.belt = Object.assign(fresh().belt, o.belt || {}); S.run = Object.assign(fresh().run, o.run || {}); S.duel = Object.assign(fresh().duel, o.duel || {}); S.tarik = Object.assign(fresh().tarik, o.tarik || {}); S.klumba = Object.assign(fresh().klumba, o.klumba || {}); S.serang = Object.assign(fresh().serang, o.serang || {}); S.tgk = Object.assign(fresh().tgk, o.tgk || {}); S.kick = Object.assign(fresh().kick, o.kick || {}); }
 } catch (e) { storeOK = false; }
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) { storeOK = false; } }
 
@@ -345,6 +350,7 @@ function route(){
   if (h === 'klumba') return viewKlumba();
   if (h === 'serang') return viewSerang();
   if (h === 'tangkis') return viewTangkis();
+  if (h === 'kick') return viewKick();
   if (h === 'game') return viewGames();
   if (h === 'tetapan') return viewTetapan();
   if (h === 'berdua') return viewBerdua();
@@ -363,8 +369,8 @@ function viewHome(){
   const p = S.profile, r = rankInfo(S.xp), m = S.mats;
   const lg = GAMES.find(g => g.id === S.last && g.ready) || GAMES[0];
   const ls = S[lg.store], LV = levelsOf(lg.id);
-  const lvl = (lg.id === 'run' || lg.mp) ? null : LV[Math.min(ls.unlocked, LV.length-1)];
-  const lsub = lg.id === 'serang' ? 'Serang, tangkis, ulang! Cabar kawan anda.' : lg.id === 'klumba' ? 'Siapa paling tepat? Cabar kawan anda sekali lagi!' : lg.id === 'tarik' ? 'Siapa paling kuat? Cabar kawan anda sekali lagi!' : lg.id === 'duel' ? 'Cabar kawan atau keluarga anda sekali lagi!' : lg.id === 'run' ? (S.run.best ? 'Rekod anda: '+fmt(S.run.best)+' m. Boleh pergi lebih jauh?' : 'Lari, lompat dan tendang papan!') : ls.passedTop ? 'Semua tahap lulus. Pecahkan rekod anda!' : 'Tahap '+lvl.nm+' · '+lvl.desc;
+  const lvl = (lg.id === 'run' || lg.id === 'kick' || lg.mp) ? null : LV[Math.min(ls.unlocked, LV.length-1)];
+  const lsub = lg.id === 'serang' ? 'Serang, tangkis, ulang! Cabar kawan anda.' : lg.id === 'klumba' ? 'Siapa paling tepat? Cabar kawan anda sekali lagi!' : lg.id === 'tarik' ? 'Siapa paling kuat? Cabar kawan anda sekali lagi!' : lg.id === 'duel' ? 'Cabar kawan atau keluarga anda sekali lagi!' : lg.id === 'kick' ? (S.kick.best ? 'Rekod anda: '+S.kick.best+' celah. Boleh lebih tinggi?' : 'Tendang melompat dan lalu celah pad!') : lg.id === 'run' ? (S.run.best ? 'Rekod anda: '+fmt(S.run.best)+' m. Boleh pergi lebih jauh?' : 'Lari, lompat dan tendang papan!') : ls.passedTop ? 'Semua tahap lulus. Pecahkan rekod anda!' : 'Tahap '+lvl.nm+' · '+lvl.desc;
   const badgeCount = Object.keys(S.badges).length;
   const games = gameCards();
   app.innerHTML = header() + `<main class="wide home">
@@ -424,7 +430,7 @@ function mpCards(big){
 const mpHead = (t, link) => `<div class="sechead"><div class="mphead"><span class="dots" aria-hidden="true"><span style="background:var(--hong)"></span><span style="background:var(--chong)"></span></span><h2>${t}</h2></div>${link ? `<a href="#berdua" style="font-size:13px;font-weight:600">Lihat semua ›</a>` : ''}</div>`;
 function gameCards(){
   return GAMES.filter(g => !g.mp).map(g => g.ready
-    ? `<a class="gcard" href="#${g.id}"><span class="ic">${ic(g.icon,'#0a0a0a')}</span><b>${g.nm}</b><span class="d">${g.d}</span>${whyTags(g)}<span class="pill dark-p">${g.mp ? '2 pemain' : g.id==='run' ? (S.run.best ? 'Rekod '+fmt(S.run.best)+' m' : 'Baharu!') : S[g.store].passedTop ? 'Semua lulus' : 'Tahap '+Math.min(S[g.store].unlocked+1,levelsOf(g.id).length)+'/'+levelsOf(g.id).length}</span></a>`
+    ? `<a class="gcard" href="#${g.id}"><span class="ic">${ic(g.icon,'#0a0a0a')}</span><b>${g.nm}</b><span class="d">${g.d}</span>${whyTags(g)}<span class="pill dark-p">${g.mp ? '2 pemain' : g.id==='run' ? (S.run.best ? 'Rekod '+fmt(S.run.best)+' m' : 'Baharu!') : g.id==='kick' ? (S.kick.best ? 'Rekod '+S.kick.best : 'Baharu!') : S[g.store].passedTop ? 'Semua lulus' : 'Tahap '+Math.min(S[g.store].unlocked+1,levelsOf(g.id).length)+'/'+levelsOf(g.id).length}</span></a>`
     : `<div class="gcard soon"><span class="ic">${ic(g.icon,'#6b6b70')}</span><b class="muted">${g.nm}</b><span class="d">${g.d}</span>${whyTags(g)}<span class="pill" style="color:var(--muted)">${ic('lock','#6b6b70',12)}Akan datang</span></div>`
   ).join('');
 }
@@ -534,6 +540,13 @@ function viewRekod(){
         <div class="tile"><span class="k">LARIAN</span><span class="v">${S.run.plays}</span></div>
       </div>
     </section>
+    <section class="card" style="display:flex;flex-direction:column;gap:10px">
+      <h2 style="font-size:18px;font-weight:700">Flying Kick Dash</h2>
+      <div class="tiles" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <div class="tile"><span class="k">REKOD</span><span class="v">${S.kick.best || '–'}</span></div>
+        <div class="tile"><span class="k">DIMAIN</span><span class="v">${S.kick.plays}</span></div>
+      </div>
+    </section>
     <section class="card" style="padding:0;overflow:hidden">
       <h2 style="padding:16px 20px 10px;font-size:18px;font-weight:700">Tangkis!: rekod terbaik</h2>
       <div class="thead label"><span>Tahap</span><span>Tangkisan</span></div>
@@ -599,7 +612,7 @@ const lbKey = (game, lvl) => lvl ? game + ':' + lvl : game;
 const lbList = key => (S.lb && S.lb[key]) || [];
 const lbMedal = i => i < 3 ? ['🥇','🥈','🥉'][i] : '#' + (i+1);
 const lbGames = () => GAMES.filter(g => g.ready && !g.mp);
-const lbLevels = id => id === 'run' ? [] : levelsOf(id);
+const lbLevels = id => (id === 'run' || id === 'kick') ? [] : levelsOf(id);
 const clsList = () => S.classes || [];
 const clsName = id => (clsList().find(c => c.id === id) || {}).nm || '';
 const clsValid = id => !!clsList().find(c => c.id === id);
@@ -891,7 +904,7 @@ function viewTetapan(confirm){
     ${langPicker()}
     <section class="card" style="padding:0;overflow:hidden">
       <h2 style="padding:16px 20px 6px;font-size:16px;font-weight:700">Bunyi dan getaran</h2>
-      ${sw('tSound', st.sound, 'Bunyi', 'Nada dalam Ikut Sabum')}
+      ${sw('tSound', st.sound, 'Bunyi', 'Nada dalam Ikut Sabum dan Flying Kick Dash')}
       ${sw('tVib', st.vib, 'Getaran', 'Getaran telefon bila betul atau salah')}
     </section>
     <section class="card" style="padding:0;overflow:hidden">
