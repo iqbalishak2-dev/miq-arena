@@ -359,7 +359,7 @@ function viewHome(){
   const lsub = lg.id === 'serang' ? 'Serang, tangkis, ulang! Cabar kawan anda.' : lg.id === 'klumba' ? 'Siapa paling tepat? Cabar kawan anda sekali lagi!' : lg.id === 'tarik' ? 'Siapa paling kuat? Cabar kawan anda sekali lagi!' : lg.id === 'duel' ? 'Cabar kawan atau keluarga anda sekali lagi!' : lg.id === 'run' ? (S.run.best ? 'Rekod anda: '+fmt(S.run.best)+' m. Boleh pergi lebih jauh?' : 'Lari, lompat dan tendang papan!') : ls.passedTop ? 'Semua tahap lulus. Pecahkan rekod anda!' : 'Tahap '+lvl.nm+' · '+lvl.desc;
   const badgeCount = Object.keys(S.badges).length;
   const games = gameCards();
-  app.innerHTML = header() + `<main>
+  app.innerHTML = header() + `<main class="wide home">
     <section class="card" style="display:flex;flex-direction:column;gap:14px">
       <div class="ptitle"><h1 style="font-size:26px">Hai, ${esc(p.nama)}!</h1></div>
       <div class="row">
@@ -421,7 +421,7 @@ function gameCards(){
   ).join('');
 }
 function viewGames(){
-  app.innerHTML = header() + `<main>
+  app.innerHTML = header() + `<main class="wide">
     <div style="display:flex;flex-direction:column;gap:4px">
       <div class="ptitle"><h1>Semua game</h1></div>
       <p class="muted" style="margin:0 0 0 14px">XP dan lencana dikongsi oleh semua game.</p>
@@ -439,7 +439,7 @@ function viewGames(){
 }
 
 function viewBerdua(){
-  app.innerHTML = header() + `<main>
+  app.innerHTML = header() + `<main class="wide">
     <section class="dark" style="display:flex;flex-direction:column;gap:10px;background:linear-gradient(135deg,#a3111a 0 49.5%,#0a0a0a 49.5% 50.5%,#1d4ed8 50.5% 100%)">
       <span class="sub">2 PEMAIN · SATU TELEFON</span>
       <h1 style="font-size:28px;line-height:34px;font-weight:700;letter-spacing:-.025em">Main berdua</h1>
@@ -470,7 +470,7 @@ function viewRekod(){
     const b = m.best[L.id], dt = new Date(b.date);
     return `<div class="trow"><div style="display:flex;align-items:center;gap:10px"><span class="belt" style="width:28px;height:8px;background:${L.col}"></span><div style="display:flex;flex-direction:column"><b>${L.nm}</b><span class="muted" style="font-size:12px">${b.avg} ms · ${dt.toLocaleDateString(dateLocale(),{day:'numeric',month:'short'})}</span></div></div><b>${fmt(b.score)}</b></div>`;
   }).join('') || '<div class="trow"><span class="muted">Belum ada rekod. Main pusingan pertama anda!</span></div>';
-  app.innerHTML = header() + `<main>
+  app.innerHTML = header() + `<main class="wide">
     <div style="display:flex;flex-direction:column;gap:4px">
       <div class="ptitle"><h1>Rekod saya</h1></div>
       <p class="muted" style="margin:0 0 0 14px">Bandingkan dengan diri sendiri, minggu demi minggu.</p>

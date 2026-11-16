@@ -173,7 +173,7 @@ function runLoop(now){
 
 // ---- lukisan ----
 function drawRun(R){
-  const {ctx, W, H} = R, hy = H*0.30, gy = H*0.88, D = 8, LW = W*0.27;
+  const {ctx, W, H} = R, hy = H*0.30, gy = H*0.88, D = 8, LW = Math.min(W*0.27, H*0.36);  // had lebar lorong supaya watak tidak terlalu besar dalam mod melintang
   const S = z => D/(D+Math.max(z,-5.5)), Y = z => hy + (gy-hy)*S(z), X = (l, z) => W/2 + (l-1)*LW*S(z);
   // langit + gunung
   let g = ctx.createLinearGradient(0,0,0,hy); g.addColorStop(0,'#5fb8f0'); g.addColorStop(1,'#d8f0ff');

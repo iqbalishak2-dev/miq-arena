@@ -339,3 +339,63 @@ nav.bn svg{width:18px;height:18px}
 .drow a{flex:none;font-size:12px;font-weight:700;padding:8px 12px;border-radius:8px;background:var(--ink);color:#fff;min-height:36px;display:flex;align-items:center}
 .dbar{display:flex;gap:4px}.dbar i{flex:1;height:6px;border-radius:3px;background:var(--line)}.dbar i.on{background:var(--ok)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ================= Tablet dan skrin besar ================= */
+@media (min-width:700px){
+  #app{max-width:1024px}
+  /* skrin permainan guna seluruh lebar skrin */
+  #app:has(.dplay),#app:has(.rplay),#app:has(.play),#app:has(.kplay),#app:has(.splay),#app:has(.tgplay){max-width:none}
+  .top{padding:18px 28px}
+  main{max-width:720px;width:100%;margin:0 auto;padding:24px 20px}
+  main.wide{max-width:1000px}
+  main.wide .grid2{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+  main.home{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-content:start}
+  main.home > *{grid-column:1/-1}
+  main.home > :nth-child(1),main.home > :nth-child(2){grid-column:auto}
+  .hero{padding-left:max(20px,calc((100% - 720px)/2));padding-right:max(20px,calc((100% - 720px)/2))}
+  nav.bn{padding-left:max(12px,calc((100% - 640px)/2));padding-right:max(12px,calc((100% - 640px)/2))}
+  .ptitle h1{font-size:32px}
+  .btn{font-size:16px}
+  .lvl{min-height:64px}
+  .mpcard{min-height:170px}
+  .mpbig{min-height:0}
+  /* game berdua: teks dan sasaran lebih besar */
+  .dhalf .sc{font-size:120px}
+  .dhalf .msg{font-size:30px;min-height:38px}
+  .dhalf .nm{font-size:17px}
+  .dmid{height:64px;padding:0 24px}
+  .sthalf{padding:20px 28px}
+  .sthalf .sc{font-size:64px}
+  .stzones{max-width:640px;margin:0 auto}
+  .stz{max-height:110px;font-size:22px;padding:0 24px}
+  .stz small{font-size:14px}
+  .klhalf{padding:20px 40px}
+  .klhalf .sc{font-size:64px}
+  .klhalf .meter{height:76px;max-width:760px}
+  .klhalf .board{width:220px;height:48px}
+  .klhalf .kres{font-size:30px}
+  .rope{width:30px;margin-left:-15px}
+  .rope .knot{transform:scale(1.4)}
+  /* kawasan main solo */
+  .play,.kplay,.splay,.tgplay{padding:16px max(16px,calc((100% - 900px)/2))}
+  .hud .v{font-size:30px}
+  #arena{min-height:60vh}
+  #karena{min-height:60vh}
+  #karena .board{width:340px;height:64px}
+  #karena .blocks{width:370px}
+  #karena .meter{height:80px}
+  .kmsg{font-size:44px}
+  .spads{max-width:760px;width:100%;margin:0 auto;gap:16px}
+  .spad svg{width:64px;height:64px}
+  #tgArena{width:min(100%,62vh);max-height:none}
+  .tgatk{width:68px;height:68px;margin:-34px 0 0 -34px}
+  .tgme{transform:scale(1.25)}
+  .tgdpad{max-width:620px;width:100%;margin:0 auto}
+  .mgrid{max-width:min(560px,44vh);margin:0 auto;width:100%}
+  .bpool{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .opt{min-height:64px;font-size:19px}
+  .qcard .qt{font-size:52px}
+  .rctl{max-width:700px;width:100%;margin:0 auto}
+  .rctl button{min-height:60px;font-size:12px}
+  #toast{font-size:44px}
+}
