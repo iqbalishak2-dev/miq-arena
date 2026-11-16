@@ -240,6 +240,16 @@ nav.bn svg{width:18px;height:18px}
 .rctl button svg{width:20px;height:20px}
 .rctl button.kick{background:linear-gradient(180deg,var(--y1),var(--y));color:var(--ink)}
 .rctl button:active{transform:scale(.95)}
+.cmeter{display:flex;align-items:center;gap:6px;flex:1;max-width:220px;font-size:18px}
+.cbar{flex:1;height:10px;border-radius:99px;background:#e5e7eb;overflow:hidden}
+.cbar i{display:block;height:100%;width:70%;background:#22c55e;border-radius:99px;transition:width .1s linear}
+.cbar i.low{background:#e11d48}
+.chcard{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:12px;border-radius:14px;background:var(--ink);color:#fff;width:100%}
+.chcard .che{font-size:34px;line-height:1;flex:none}
+.chcard .cht{display:flex;flex-direction:column;gap:4px;font-size:13px;line-height:18px;color:rgba(255,255,255,.8)}
+.chcard .cht b{font-size:16px;color:#fff}
+.chcard .pill{align-self:flex-start;margin-top:2px}
+.chcard:active{transform:scale(.98)}
 .rtop{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .rtop .quit{padding:6px 8px;margin:0}
 /* duel */

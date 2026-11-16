@@ -164,6 +164,19 @@ const I18N = {
   'Petua: ketik skrin bila papan kayu hampir, untuk menendang dan dapat bonus +#': 'Tip: tap the screen when a wooden board is close to kick it for a +# bonus',
   'Hebat! Semakin jauh, semakin laju. Kekal fokus pada lorong di hadapan.': 'Great! The further you go, the faster it gets. Stay focused on the lane ahead.',
   'JUMLAH': 'TOTAL', 'LARIAN': 'RUNS', 'REKOD': 'RECORD',
+  // Mod Dikejar
+  'Mod Dikejar': 'Chase Mode', 'Harimau Putih': 'White Tiger', 'Sabeum Garang': 'Angry Sabeum',
+  'Ada yang mengejar anda! Setiap kali dilanggar, dia makin dekat. Tendang papan untuk jauhkan diri. Kalau dia sampai, anda ditangkap.': 'Someone is chasing you! Every time you crash, they get closer. Kick boards to pull away. If they reach you, you are caught.',
+  'Laju, tapi lambat bila belok. Bila dia mengaum,': 'Fast, but slow to turn. When it roars,', 'tukar lorong': 'change lane', 'untuk elak terkaman.': 'to dodge the pounce.',
+  'Kejar pelajar yang lewat ke kelas. Bila dia jerit': 'Chases students who are late for class. When he shouts', '"Charyot!"': '"Charyot!"', ', tendang untuk buat Kiai.': ', kick to do a Kiai.',
+  'Rekod # m': 'Record # m', 'Jarak pengejar': 'Chaser distance',
+  'GRRR! Tukar lorong!': 'GRRR! Change lane!', 'CHARYOT! Tendang!': 'CHARYOT! Kick!', 'Harimau terlepas!': 'Tiger missed!', 'KIAI! Sabeum terkejut!': 'KIAI! Sabeum is startled!',
+  'Dia makin dekat!': 'Getting closer!', 'DITANGKAP!': 'CAUGHT!', 'Ditangkap!': 'Caught!',
+  'Harimau Putih mengejar anda!': 'The White Tiger is chasing you!', 'Sabeum Garang mengejar anda!': 'Angry Sabeum is chasing you!',
+  '🐯 Dikejar Harimau Putih': '🐯 Chased by the White Tiger', '🥋 Dikejar Sabeum Garang': '🥋 Chased by Angry Sabeum',
+  'Petua: bila harimau mengaum, terus tukar lorong. Tendang papan untuk tambah jarak.': 'Tip: when the tiger roars, change lane right away. Kick boards to gain distance.',
+  'Petua: bila Sabeum jerit "Charyot!", tendang segera. Tendang papan untuk tambah jarak.': 'Tip: when Sabeum shouts "Charyot!", kick right away. Kick boards to gain distance.',
+  'Dojang Run: Mod Dikejar baharu! Lari daripada Harimau Putih atau Sabeum Garang': 'Dojang Run: new Chase Mode! Run from the White Tiger or Angry Sabeum',
 
   // ---- Kyokpa Timing ----
   'Tekan skrin bila jarum berada dalam zon kuning. Tepat di tengah = Sempurna, dan papan pecah!': 'Tap the screen when the needle is in the yellow zone. Dead centre = Perfect, and the board breaks!',

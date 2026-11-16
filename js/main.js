@@ -22,11 +22,9 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 
 // ================= Notifikasi kemas kini =================
 // Tukar APP_VER dan WHATS_NEW setiap kali keluarkan versi baru (sama dengan VERSION dalam sw.js).
-const APP_VER = '1.5.0';
+const APP_VER = '1.6.0';
 const WHATS_NEW = [
-  'Notifikasi bila ada versi baru',
-  'Tulis nama selepas tamat game & papan markah 10 teratas',
-  'Setiap game ada penerangan "Kenapa main game ini?"',
+  'Dojang Run: Mod Dikejar baharu! Lari daripada Harimau Putih atau Sabeum Garang',
 ];
 function showUpdateBar(){
   if (document.getElementById('updBar')) return;
