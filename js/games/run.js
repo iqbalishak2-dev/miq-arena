@@ -4,8 +4,8 @@
 const CHASERS = {
   harimau: {nm:'Harimau Putih', emo:'🐯', hit:0.36, rec:0.034, every:[9,13], rush:0.2,
     warn:'GRRR! Tukar lorong!', dodge:'Harimau terlepas!', d:'Laju, tapi lambat bila belok. Bila dia mengaum, <b>tukar lorong</b> untuk elak terkaman.'},
-  sabeum:  {nm:'Sabeum Garang', emo:'🥋', hit:0.3, rec:0.03, every:[7,10], rush:0.18,
-    warn:'CHARYOT! Tendang!', dodge:'KIAI! Sabeum terkejut!', d:'Kejar pelajar yang lewat ke kelas. Bila dia jerit <b>"Charyot!"</b>, tendang untuk buat Kiai.'},
+  sabeum:  {nm:'Sabum Garang', emo:'🥋', hit:0.3, rec:0.03, every:[7,10], rush:0.18,
+    warn:'CHARYOT! Tendang!', dodge:'KIAI! Sabum terkejut!', d:'Kejar pelajar yang lewat ke kelas. Bila dia jerit <b>"Charyot!"</b>, tendang untuk buat Kiai.'},
 };
 const chaseCards = () => Object.entries(CHASERS).map(([id, c]) => `<button class="chcard" data-ch="${id}">
     <span class="che" aria-hidden="true">${c.emo}</span>
@@ -407,7 +407,7 @@ function drawChaser(R, LW, gy){
   const x = W/2 + (R.cx-1)*LW*0.85, y = H + r*1.05 - v*(H - gy + r*1.05) + bob;  // v=1: sampai ke kaki pemain
   const paw = Math.sin(R.t*14);
   if (R.chase === 'harimau') drawTiger(ctx, x, y, r, paw, R.warnT > 0 || R.state === 'over');
-  else drawSabeum(ctx, x, y, r, paw, R.warnT > 0 || R.state === 'over');
+  else drawSabum(ctx, x, y, r, paw, R.warnT > 0 || R.state === 'over');
 }
 function drawTiger(ctx, x, y, r, paw, roar){
   // kaki depan mencakar
@@ -447,7 +447,7 @@ function drawTiger(ctx, x, y, r, paw, roar){
     ctx.beginPath(); ctx.moveTo(x, y + r*0.22); ctx.lineTo(x, y + r*0.34); ctx.quadraticCurveTo(x - r*0.12, y + r*0.44, x - r*0.22, y + r*0.36); ctx.moveTo(x, y + r*0.34); ctx.quadraticCurveTo(x + r*0.12, y + r*0.44, x + r*0.22, y + r*0.36); ctx.stroke();
   }
 }
-function drawSabeum(ctx, x, y, r, paw, shout){
+function drawSabum(ctx, x, y, r, paw, shout){
   // badan dobok + tali pinggang hitam
   ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x - r*1.05, y + r*0.75, r*2.1, r*2, r*0.4) : ctx.rect(x - r*1.05, y + r*0.75, r*2.1, r*2); ctx.fill();
   ctx.strokeStyle = 'rgba(0,0,0,.15)'; ctx.lineWidth = r*0.05; ctx.beginPath(); ctx.moveTo(x - r*0.35, y + r*0.8); ctx.lineTo(x + r*0.15, y + r*1.5); ctx.moveTo(x + r*0.35, y + r*0.8); ctx.lineTo(x - r*0.15, y + r*1.5); ctx.stroke();
@@ -511,7 +511,7 @@ function runFinish(){
       <div class="st"><span class="label">Bintang</span><div class="v">${R.stars}</div></div>
       <div class="st"><span class="label">Papan pecah</span><div class="v">${R.boards}</div></div>
     </div>
-    <div class="tip">${CH ? (CH === 'harimau' ? 'Petua: bila harimau mengaum, terus tukar lorong. Tendang papan untuk tambah jarak.' : 'Petua: bila Sabeum jerit "Charyot!", tendang segera. Tendang papan untuk tambah jarak.') : R.boards < 2 ? 'Petua: ketik skrin bila papan kayu hampir, untuk menendang dan dapat bonus +50.' : 'Hebat! Semakin jauh, semakin laju. Kekal fokus pada lorong di hadapan.'}</div>
+    <div class="tip">${CH ? (CH === 'harimau' ? 'Petua: bila harimau mengaum, terus tukar lorong. Tendang papan untuk tambah jarak.' : 'Petua: bila Sabum jerit "Charyot!", tendang segera. Tendang papan untuk tambah jarak.') : R.boards < 2 ? 'Petua: ketik skrin bila papan kayu hampir, untuk menendang dan dapat bonus +50.' : 'Hebat! Semakin jauh, semakin laju. Kekal fokus pada lorong di hadapan.'}</div>
     <div style="display:flex;flex-direction:column;gap:8px">
       <button class="btn p full" id="rAgain">Lari lagi</button>
       <a class="btn g full" href="#game">Senarai game</a>

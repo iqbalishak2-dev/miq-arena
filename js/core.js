@@ -273,7 +273,7 @@ const BADGES = [
 
 // ================= Simpanan (telefon ini sahaja) =================
 const KEY = 'miq-arena-v1';
-const fresh = () => ({settings:{sound:true, vib:true, lang:'ms'}, profile:null, xp:0, rounds:0, days:{}, badges:{}, last:'matsogi', mats:{unlocked:0, best:{}, bestRt:null, plays:0, passedTop:false}, kyok:{unlocked:0, best:{}, plays:0, passedTop:false}, kuiz:{unlocked:0, best:{}, plays:0, passedTop:false}, memo:{unlocked:0, best:{}, plays:0, passedTop:false}, sim:{unlocked:0, best:{}, plays:0, passedTop:false}, belt:{unlocked:0, best:{}, plays:0, passedTop:false}, run:{best:0, bestStars:0, plays:0, totalM:0, chase:{harimau:0, sabeum:0}}, duel:{plays:0, fastest:null, p2:'Lawan'}, tarik:{plays:0, bestRate:0}, klumba:{plays:0, perfect:0}, serang:{plays:0, blocks:0}, tgk:{unlocked:0, best:{}, plays:0, passedTop:false}, lb:{}, lbNames:[]});
+const fresh = () => ({settings:{sound:true, vib:true, lang:'ms'}, profile:null, xp:0, rounds:0, days:{}, badges:{}, last:'matsogi', mats:{unlocked:0, best:{}, bestRt:null, plays:0, passedTop:false}, kyok:{unlocked:0, best:{}, plays:0, passedTop:false}, kuiz:{unlocked:0, best:{}, plays:0, passedTop:false}, memo:{unlocked:0, best:{}, plays:0, passedTop:false}, sim:{unlocked:0, best:{}, plays:0, passedTop:false}, belt:{unlocked:0, best:{}, plays:0, passedTop:false}, run:{best:0, bestStars:0, plays:0, totalM:0, chase:{harimau:0, sabeum:0}}, duel:{plays:0, fastest:null, p2:'Lawan'}, tarik:{plays:0, bestRate:0}, klumba:{plays:0, perfect:0}, serang:{plays:0, blocks:0}, tgk:{unlocked:0, best:{}, plays:0, passedTop:false}, lb:{}, lbNames:[], classes:[], curClass:'', sabumPin:''});
 let S = fresh(), storeOK = true;
 try {
   const raw = localStorage.getItem(KEY);
@@ -350,6 +350,7 @@ function route(){
   if (h === 'berdua') return viewBerdua();
   if (h === 'rekod') return viewRekod();
   if (h === 'papan' || h.startsWith('papan:')) return viewPapan(h.slice(6));
+  if (h === 'kelas') return viewKelas();
   if (h === 'profil') return viewProfil(false);
   return viewHome();
 }
@@ -590,79 +591,97 @@ function viewRekod(){
 
 
 // ================= Papan markah (leaderboard) =================
-// Selepas tamat game, pemain taip nama. 10 teratas setiap game/tahap disimpan dalam peranti ini.
+// Selepas tamat game, pemain taip nama dan pilih kelas. 10 teratas setiap kelas, setiap game/tahap. Disimpan dalam peranti ini.
 const LB_MAX = 10;
-let LBP = null; // keputusan yang menunggu nama
+let LBP = null;       // keputusan yang menunggu nama
+let SABUM_ON = false; // Mod Sabum dibuka dengan PIN (sehingga app ditutup)
 const lbKey = (game, lvl) => lvl ? game + ':' + lvl : game;
 const lbList = key => (S.lb && S.lb[key]) || [];
 const lbMedal = i => i < 3 ? ['🥇','🥈','🥉'][i] : '#' + (i+1);
 const lbGames = () => GAMES.filter(g => g.ready && !g.mp);
 const lbLevels = id => id === 'run' ? [] : levelsOf(id);
-function lbRows(key, hi){
-  const L = lbList(key);
+const clsList = () => S.classes || [];
+const clsName = id => (clsList().find(c => c.id === id) || {}).nm || '';
+const clsValid = id => !!clsList().find(c => c.id === id);
+// Senarai untuk satu kelas ('' = semua kelas digabung), sudah disusun
+const lbOf = (key, c) => lbList(key).filter(e => !c || e.c === c).sort((a, b) => b.s - a.s || a.t - b.t);
+const lbRankIn = (key, c, s) => lbOf(key, c).filter(e => e.s >= s).length + 1;
+function lbRows(key, hi, c){
+  const L = lbOf(key, c).slice(0, LB_MAX), all = !c && clsList().length;
   if (!L.length) return '<div class="trow"><span class="muted">Belum ada nama. Jadilah yang pertama!</span></div>';
   return L.map((e, i) => `<div class="trow lbrow ${e.t === hi ? 'me' : ''}">
     <span style="display:flex;align-items:center;gap:10px;min-width:0"><span class="lbn">${lbMedal(i)}</span>
-    <span style="display:flex;flex-direction:column;min-width:0"><b class="lbnm">${esc(e.n)}</b><span class="muted" style="font-size:12px">${esc(e.d)}</span></span></span>
-    <b>${fmt(e.s)}</b></div>`).join('');
+    <span style="display:flex;flex-direction:column;min-width:0"><b class="lbnm">${esc(e.n)}</b><span class="muted" style="font-size:12px">${esc(e.d)}${all && clsName(e.c) ? ' · ' + esc(clsName(e.c)) : ''}</span></span></span>
+    <span style="display:flex;align-items:center;gap:8px"><b>${fmt(e.s)}</b>${SABUM_ON && location.hash.startsWith('#papan') ? `<button class="lbdel" data-lbdel="${e.t}" aria-label="Padam ${esc(e.n)}">✕</button>` : ''}</span></div>`).join('');
 }
 function lbInner(){
-  const p = LBP, L = lbList(p.key);
-  const rank = L.filter(e => e.s >= p.s).length + 1, fits = rank <= LB_MAX;
+  const p = LBP, rank = lbRankIn(p.key, p.c, p.s), fits = rank <= LB_MAX;
   let top;
   if (p.saved) top = `<div class="lbok">✓ Disimpan di tempat #${p.rank}. Tekan <b>Main lagi</b> untuk pemain seterusnya.</div>`;
   else if (p.s <= 0) top = '';
+  else if (!fits && p.c) top = `<p class="muted" style="margin:0;font-size:13px">Markah ini belum cukup untuk masuk ${LB_MAX} teratas kelas ini. Cuba lagi!</p><button class="btn g full" type="button" id="lbOpen">Pilih kelas lain</button>`;
   else if (!fits) top = `<p class="muted" style="margin:0;font-size:13px">Markah ini belum cukup untuk masuk ${LB_MAX} teratas. Cuba lagi!</p>`;
   else top = `<button class="btn p full" type="button" id="lbOpen">✍️ Tulis nama · tempat #${rank}</button>`;
+  const sub = [p.title, clsName(p.c)].filter(Boolean).join(' · ');
   return `<div style="padding:16px 20px 12px;display:flex;flex-direction:column;gap:10px">
-      <div class="sechead"><h2 style="font-size:16px">${ic('trophy','#0a0a0a',18)} Papan markah</h2><span class="muted" style="font-size:12px">${esc(p.title)}</span></div>
+      <div class="sechead"><h2 style="font-size:16px">${ic('trophy','#0a0a0a',18)} Papan markah</h2><span class="muted" style="font-size:12px">${esc(sub)}</span></div>
       ${top}
     </div>
-    ${lbRows(p.key, p.savedT)}
-    <a class="trow" href="#papan:${p.key}" style="justify-content:center;font-size:13px;font-weight:600">Lihat semua papan markah ›</a>`;
+    ${lbRows(p.key, p.savedT, p.c)}
+    <a class="trow" href="#papan:${p.key}${p.key.includes(':') ? '' : ':'}:${p.c || ''}" style="justify-content:center;font-size:13px;font-weight:600">Lihat semua papan markah ›</a>`;
 }
-// Pop up isi nama (muncul sendiri selepas game tamat jika markah masuk 10 teratas)
+// Pop up isi nama + pilih kelas (muncul sendiri selepas game tamat)
 function lbPopup(){
-  const p = LBP; if (!p || p.saved || document.getElementById('lbPop')) return;
-  const rank = lbList(p.key).filter(e => e.s >= p.s).length + 1;
-  if (p.s <= 0 || rank > LB_MAX) return;
-  const el = document.createElement('div');
+  const p = LBP; if (!p || p.saved || p.s <= 0) return;
+  const C = clsList(), pick = C.length && !p.c, rank = lbRankIn(p.key, p.c, p.s), fits = pick || rank <= LB_MAX;
+  const old = document.getElementById('lbPop'), nameVal = old ? document.getElementById('lbName').value : '';
+  const el = old || document.createElement('div');
   el.className = 'updwrap'; el.id = 'lbPop';
   el.innerHTML = `<form id="lbForm" class="card updnew" role="dialog" aria-modal="true" aria-labelledby="lbPT" novalidate>
-    <span class="pill y" style="align-self:center">${ic('trophy','#0a0a0a',14)} Tempat #${rank}</span>
-    <h2 id="lbPT" style="margin:0;font-size:22px;text-align:center">${rank === 1 ? '🥇 Markah tertinggi!' : '🎉 Masuk 10 teratas!'}</h2>
+    ${fits && !pick ? `<span class="pill y" style="align-self:center">${ic('trophy','#0a0a0a',14)} Tempat #${rank}</span>` : ''}
+    <h2 id="lbPT" style="margin:0;font-size:22px;text-align:center">${pick ? '🏆 Pilih kelas anda' : !fits ? 'Belum masuk 10 teratas' : rank === 1 ? '🥇 Markah tertinggi!' : '🎉 Masuk 10 teratas!'}</h2>
     <p class="muted" style="margin:0;text-align:center;font-size:14px">${esc(p.d)}</p>
-    <label for="lbName" class="label">Tulis nama anda untuk papan markah</label>
-    <input id="lbName" maxlength="16" autocomplete="off" enterkeyhint="done" placeholder="Nama panggilan">
+    ${C.length ? `<span class="label">Kelas</span><div class="lbchips">${C.map(c => `<button type="button" class="chip ${c.id === p.c ? 'on' : ''}" data-lbc="${c.id}" aria-pressed="${c.id === p.c}">${esc(c.nm)}</button>`).join('')}</div>` : ''}
+    ${fits ? `<label for="lbName" class="label">Tulis nama anda untuk papan markah</label>
+    <input id="lbName" maxlength="16" autocomplete="off" enterkeyhint="done" placeholder="Nama panggilan" value="${esc(nameVal)}">
     ${(S.lbNames||[]).length ? `<div class="lbchips">${S.lbNames.map(n => `<button type="button" class="chip" data-lbn="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}
     <span class="err" id="lbErr" role="alert"></span>
-    <button class="btn p full" type="submit">Simpan</button>
-    <button class="btn g full" type="button" id="lbSkip">Langkau</button>
+    <button class="btn p full" type="submit">Simpan</button>` : `<p class="muted" style="margin:0;text-align:center;font-size:14px">Markah ini belum cukup untuk masuk ${LB_MAX} teratas kelas ini. Cuba lagi!</p><input id="lbName" type="hidden">`}
+    <button class="btn g full" type="button" id="lbSkip">${fits ? 'Langkau' : 'Tutup'}</button>
   </form>`;
-  document.body.appendChild(el);
+  if (!old) { document.body.appendChild(el); el.onclick = e => { if (e.target === el) el.remove(); }; }
   if (isEN()) trNode(el);
-  el.onclick = e => { if (e.target === el) el.remove(); };
-  setTimeout(() => { const i = document.getElementById('lbName'); if (i) i.focus(); }, 50);
+  if (!old) setTimeout(() => { const i = document.getElementById('lbName'); if (i && i.type !== 'hidden') i.focus(); }, 50);
 }
 window.addEventListener('hashchange', () => { const p = document.getElementById('lbPop'); if (p) p.remove(); });
 // Dipanggil dalam skrin keputusan setiap game solo
 function lbBlock(game, lvl, s, d){
   const lv = lvl ? (lbLevels(game).find(x => x.id === lvl) || {}).nm : '';
-  LBP = {key: lbKey(game, lvl), s: Math.round(s) || 0, d, title: lv ? 'Tahap ' + lv : '', saved:false};
-  const mine = LBP; setTimeout(() => { if (LBP === mine && document.getElementById('lbBox')) lbPopup(); }, 700);
+  LBP = {key: lbKey(game, lvl), s: Math.round(s) || 0, d, title: lv ? 'Tahap ' + lv : '', saved:false, c: clsValid(S.curClass) ? S.curClass : ''};
+  // pop up jika masuk 10 teratas kelas semasa (atau belum pilih kelas)
+  const mine = LBP, show = clsList().length && !mine.c ? true : lbRankIn(mine.key, mine.c, mine.s) <= LB_MAX;
+  if (show) setTimeout(() => { if (LBP === mine && document.getElementById('lbBox')) lbPopup(); }, 700);
   return `<section class="card lb" id="lbBox" style="padding:0;overflow:hidden">${lbInner()}</section>`;
 }
+// Simpan: kekalkan 10 teratas bagi setiap kelas
+function lbPrune(key){
+  const keep = [], cnt = {};
+  lbList(key).slice().sort((a, b) => b.s - a.s || a.t - b.t).forEach(e => { const k = e.c || ''; cnt[k] = (cnt[k]||0) + 1; if (cnt[k] <= LB_MAX) keep.push(e); });
+  S.lb[key] = keep;
+}
 function lbSave(){
-  const inp = document.getElementById('lbName'); if (!inp || !LBP || LBP.saved) return;
+  const inp = document.getElementById('lbName'); if (!inp || !LBP || LBP.saved || inp.type === 'hidden') return;
+  const err = document.getElementById('lbErr');
+  if (clsList().length && !LBP.c) { err.textContent = 'Pilih kelas dahulu.'; if (isEN()) trNode(err); return; }
   const n = inp.value.trim().replace(/\s+/g, ' ');
-  if (!n) { document.getElementById('lbErr').textContent = 'Tulis nama dahulu.'; inp.focus(); return; }
-  const t = Date.now(), list = lbList(LBP.key).slice();
-  list.push({n, s:LBP.s, d:LBP.d, t});
-  list.sort((a, b) => b.s - a.s || a.t - b.t);
-  S.lb[LBP.key] = list.slice(0, LB_MAX);
+  if (!n) { err.textContent = 'Tulis nama dahulu.'; if (isEN()) trNode(err); inp.focus(); return; }
+  const t = Date.now();
+  S.lb[LBP.key] = [...lbList(LBP.key), {n, s:LBP.s, d:LBP.d, t, c:LBP.c}];
+  lbPrune(LBP.key);
   S.lbNames = [n, ...(S.lbNames||[]).filter(x => x.toLowerCase() !== n.toLowerCase())].slice(0, 8);
+  if (LBP.c) S.curClass = LBP.c;
   save();
-  LBP.saved = true; LBP.savedT = t; LBP.rank = list.findIndex(e => e.t === t) + 1;
+  LBP.saved = true; LBP.savedT = t; LBP.rank = lbOf(LBP.key, LBP.c).findIndex(e => e.t === t) + 1;
   const pop = document.getElementById('lbPop'); if (pop) pop.remove();
   const box = document.getElementById('lbBox'); if (box) box.innerHTML = lbInner();
   buzz(30);
@@ -671,41 +690,109 @@ document.addEventListener('submit', e => { if (e.target.id === 'lbForm') { e.pre
 document.addEventListener('click', e => {
   if (e.target.closest('#lbOpen')) return lbPopup();
   if (e.target.closest('#lbSkip')) { const p = document.getElementById('lbPop'); if (p) p.remove(); return; }
+  const k = e.target.closest('[data-lbc]');
+  if (k && LBP) { LBP.c = k.dataset.lbc; S.curClass = LBP.c; save(); lbPopup(); const box = document.getElementById('lbBox'); if (box) box.innerHTML = lbInner(); return; }
   const c = e.target.closest('[data-lbn]');
   if (c) { const i = document.getElementById('lbName'); if (i) { i.value = c.dataset.lbn; document.getElementById('lbErr').textContent = ''; } }
 });
 
 function viewPapan(sel, ask){
   const games = lbGames();
-  let [gid, lid] = (sel || '').split(':');
+  let [gid, lid, cid] = (sel || '').split(':');
   if (!games.find(g => g.id === gid)) gid = games[0].id;
   const LV = lbLevels(gid);
   if (LV.length && !LV.find(l => l.id === lid)) lid = (LV.find(l => lbList(lbKey(gid, l.id)).length) || LV[0]).id;
   if (!LV.length) lid = '';
-  const key = lbKey(gid, lid), n = lbList(key).length;
+  if (!clsValid(cid)) cid = '';
+  const C = clsList(), key = lbKey(gid, lid), n = lbOf(key, cid).length;
+  const href = (g, l, c) => `#papan:${g}:${l || ''}:${c || ''}`;
   app.innerHTML = header() + `<main class="wide">
     <div style="display:flex;flex-direction:column;gap:4px">
       <div class="ptitle"><h1>Papan markah</h1></div>
-      <p class="muted" style="margin:0 0 0 14px">${LB_MAX} teratas setiap game. Disimpan dalam peranti ini sahaja.</p>
+      <p class="muted" style="margin:0 0 0 14px">${LB_MAX} teratas setiap game${C.length ? ' dan setiap kelas' : ''}. Disimpan dalam peranti ini sahaja.</p>
     </div>
-    <div class="lbtabs">${games.map(g => `<a class="chip ${g.id===gid?'on':''}" href="#papan:${g.id}" ${g.id===gid?'aria-current="true"':''}>${g.nm}</a>`).join('')}</div>
-    ${LV.length ? `<div class="lbtabs">${LV.map(l => `<a class="chip ${l.id===lid?'on':''}" href="#papan:${gid}:${l.id}"><span class="sw" style="width:22px;background:${l.col}"></span>${l.nm}</a>`).join('')}</div>` : ''}
+    ${C.length ? `<div class="lbtabs">${[{id:'', nm:'Semua kelas'}, ...C].map(c => `<a class="chip ${c.id===cid?'on':''}" href="${href(gid, lid, c.id)}">${esc(c.nm)}</a>`).join('')}</div>` : ''}
+    <div class="lbtabs">${games.map(g => `<a class="chip ${g.id===gid?'on':''}" href="${href(g.id, '', cid)}" ${g.id===gid?'aria-current="true"':''}>${g.nm}</a>`).join('')}</div>
+    ${LV.length ? `<div class="lbtabs">${LV.map(l => `<a class="chip ${l.id===lid?'on':''}" href="${href(gid, l.id, cid)}"><span class="sw" style="width:22px;background:${l.col}"></span>${l.nm}</a>`).join('')}</div>` : ''}
     <section class="card" style="padding:0;overflow:hidden">
       <div class="thead label"><span>Pemain</span><span>Markah</span></div>
-      ${lbRows(key)}
+      ${lbRows(key, null, cid)}
     </section>
     <div style="display:flex;flex-direction:column;gap:8px">
       <a class="btn p full" href="#${gid}">${ic('play','#0a0a0a',16)}Main ${esc(games.find(g => g.id === gid).nm)}</a>
-      ${n ? (ask
+      ${SABUM_ON && n ? (ask
         ? `<div class="grid2" style="gap:8px"><button class="btn g" id="lbNo">Batal</button><button class="btn d" id="lbYes" style="background:var(--bad)">Ya, kosongkan</button></div>`
-        : `<button class="btn g full" id="lbClr">Kosongkan papan ini</button>`) : ''}
+        : `<button class="btn g full" id="lbClr">Kosongkan papan ini${cid ? ' (' + esc(clsName(cid)) + ')' : ''}</button>`) : ''}
+      <a class="btn g full" href="#kelas">${ic('gear','#0a0a0a',16)}${SABUM_ON ? 'Mod Sabum: urus kelas' : 'Mod Sabum'}</a>
     </div>
   </main>` + nav('rekod');
-  const sel2 = gid + (lid ? ':' + lid : '');
+  const sel2 = [gid, lid, cid].join(':');
   const q = id => document.getElementById(id);
   if (q('lbClr')) q('lbClr').onclick = () => viewPapan(sel2, true);
   if (q('lbNo')) q('lbNo').onclick = () => viewPapan(sel2);
-  if (q('lbYes')) q('lbYes').onclick = () => { delete S.lb[key]; save(); viewPapan(sel2); };
+  if (q('lbYes')) q('lbYes').onclick = () => { S.lb[key] = cid ? lbList(key).filter(e => e.c !== cid) : []; save(); viewPapan(sel2); };
+  app.querySelectorAll('[data-lbdel]').forEach(b => b.onclick = () => { const t = +b.dataset.lbdel; S.lb[key] = lbList(key).filter(e => e.t !== t); save(); viewPapan(sel2); });
+  window.scrollTo(0,0);
+}
+
+// ================= Mod Sabum: urus kelas (dikunci dengan PIN) =================
+function viewKelas(msg){
+  const pinSet = !!S.sabumPin;
+  const head = `<div style="display:flex;flex-direction:column;gap:4px"><div class="ptitle"><h1>Mod Sabum</h1></div>
+    <p class="muted" style="margin:0 0 0 14px">Untuk Sabum sahaja: urus senarai kelas dan papan markah.</p></div>`;
+  let body;
+  if (!pinSet || !SABUM_ON) body = `<form class="card" id="pinF" style="display:flex;flex-direction:column;gap:12px" novalidate>
+      <label for="pin1" class="label">${pinSet ? 'Masukkan PIN Sabum' : 'Tetapkan PIN Sabum (4 nombor)'}</label>
+      <input id="pin1" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••">
+      ${pinSet ? '' : '<input id="pin2" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="Ulang PIN" aria-label="Ulang PIN">'}
+      <span class="err" id="pinErr" role="alert">${msg || ''}</span>
+      <button class="btn p full" type="submit">${pinSet ? 'Buka' : 'Simpan PIN'}</button>
+      ${pinSet ? '' : '<p class="muted" style="margin:0;font-size:12px">Ingat PIN ini. Pelajar tidak boleh ubah kelas atau padam markah tanpa PIN.</p>'}
+    </form>`;
+  else body = `<section class="card" style="padding:0;overflow:hidden">
+      <h2 style="padding:16px 20px 6px;font-size:16px;font-weight:700">Senarai kelas</h2>
+      ${clsList().length ? clsList().map(c => `<div class="trow" style="gap:8px">
+        <input data-cren="${c.id}" value="${esc(c.nm)}" maxlength="24" aria-label="Nama kelas" style="flex:1;min-width:0">
+        <button class="btn g" data-cdel="${c.id}" style="flex:none;padding:10px 12px" aria-label="Padam kelas ${esc(c.nm)}">✕</button></div>`).join('')
+        : '<div class="trow"><span class="muted">Belum ada kelas. Tambah kelas pertama di bawah.</span></div>'}
+      <form class="trow" id="cAdd" style="gap:8px" novalidate>
+        <input id="cNew" maxlength="24" autocomplete="off" placeholder="Contoh: BK5 Isnin" aria-label="Nama kelas baru" style="flex:1;min-width:0">
+        <button class="btn p" type="submit" style="flex:none">Tambah</button>
+      </form>
+    </section>
+    ${msg ? `<p class="err" role="alert" style="margin:0">${msg}</p>` : ''}
+    <p class="muted" style="margin:0;font-size:12px;line-height:18px">Tukar nama terus dalam kotak. Padam kelas akan memadam markah kelas itu juga. Untuk padam satu nama, buka Papan markah dan tekan ✕.</p>
+    <a class="btn p full" href="#papan">${ic('trophy','#0a0a0a',16)}Papan markah</a>
+    <div class="grid2" style="gap:8px"><button class="btn g" id="pinChg">Tukar PIN</button><button class="btn g" id="sLock">Kunci semula</button></div>`;
+  app.innerHTML = header() + `<main>${head}${body}</main>` + nav('profil');
+  const q = id => document.getElementById(id);
+  if (q('pinF')) q('pinF').onsubmit = e => {
+    e.preventDefault();
+    const a = q('pin1').value.trim();
+    if (!/^\d{4}$/.test(a)) return viewKelas('PIN mesti 4 nombor.');
+    if (pinSet) { if (a !== S.sabumPin) return viewKelas('PIN salah.'); SABUM_ON = true; return viewKelas(); }
+    if (a !== q('pin2').value.trim()) return viewKelas('PIN tidak sama. Cuba lagi.');
+    S.sabumPin = a; save(); SABUM_ON = true; viewKelas();
+  };
+  if (q('pin1')) q('pin1').focus();
+  if (q('cAdd')) q('cAdd').onsubmit = e => {
+    e.preventDefault();
+    const nm = q('cNew').value.trim().replace(/\s+/g, ' ');
+    if (!nm) return;
+    if (clsList().some(c => c.nm.toLowerCase() === nm.toLowerCase())) return viewKelas('Kelas ini sudah ada.');
+    S.classes = [...clsList(), {id:'k' + Date.now().toString(36), nm}]; save(); viewKelas();
+  };
+  app.querySelectorAll('[data-cren]').forEach(i => i.onchange = () => { const c = clsList().find(x => x.id === i.dataset.cren), nm = i.value.trim().replace(/\s+/g, ' '); if (c && nm) { c.nm = nm; save(); } else viewKelas(); });
+  app.querySelectorAll('[data-cdel]').forEach(b => b.onclick = () => {
+    const id = b.dataset.cdel;
+    if (b.dataset.sure !== '1') { b.dataset.sure = '1'; b.textContent = 'Padam?'; b.style.background = 'var(--bad)'; b.style.color = '#fff'; return; }
+    S.classes = clsList().filter(c => c.id !== id);
+    Object.keys(S.lb).forEach(k => S.lb[k] = S.lb[k].filter(e => e.c !== id));
+    if (S.curClass === id) S.curClass = '';
+    save(); viewKelas();
+  });
+  if (q('pinChg')) q('pinChg').onclick = () => { S.sabumPin = ''; save(); viewKelas(); };
+  if (q('sLock')) q('sLock').onclick = () => { SABUM_ON = false; location.hash = 'papan'; };
   window.scrollTo(0,0);
 }
 
@@ -810,6 +897,11 @@ function viewTetapan(confirm){
     <section class="card" style="padding:0;overflow:hidden">
       <h2 style="padding:16px 20px 6px;font-size:16px;font-weight:700">Pasang app</h2>
       ${install}
+    </section>
+    <section class="card" style="display:flex;flex-direction:column;gap:10px">
+      <h2 style="font-size:16px;font-weight:700">Mod Sabum</h2>
+      <p class="muted" style="margin:0;line-height:20px">Urus senarai kelas dan papan markah. Dikunci dengan PIN.</p>
+      <a class="btn g full" href="#kelas">${ic('gear','#0a0a0a',16)}Buka Mod Sabum</a>
     </section>
     <section class="card" style="display:flex;flex-direction:column;gap:10px">
       <h2 style="font-size:16px;font-weight:700">Untuk ibu bapa: privasi</h2>
