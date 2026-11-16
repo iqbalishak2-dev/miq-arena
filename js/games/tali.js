@@ -26,7 +26,7 @@ function viewTali(){
         ${B_ALL.filter(b=>!b.tip).map(b=>beltBar(b,'100%')).join('')}
       </div>
     </section>
-    <main>
+    <main>${whyBox('tali')}
       <section style="display:flex;flex-direction:column;gap:10px">
         <h2 style="font-size:18px;font-weight:700">Pilih tahap</h2>
         ${rows}

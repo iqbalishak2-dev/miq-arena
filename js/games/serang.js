@@ -16,7 +16,7 @@ function viewSerang(){
         <div><span class="dot" style="background:#ff2a2a"></span><span><b>Penangkis</b>Tekan zon merah</span></div>
       </div>
     </section>
-    <main>
+    <main>${whyBox('serang')}
       <form class="card" id="stForm" style="display:flex;flex-direction:column;gap:16px" novalidate>
         <div class="field"><label for="stP1" class="label">Nama pemain Hong (atas)</label><input id="stP1" maxlength="14" autocomplete="off" value="${esc(S.duel.p2 || 'Lawan')}"></div>
         <div class="field"><label for="stP2" class="label">Nama pemain Chong (bawah)</label><input id="stP2" maxlength="14" autocomplete="off" value="${esc(S.profile.nama)}"></div>

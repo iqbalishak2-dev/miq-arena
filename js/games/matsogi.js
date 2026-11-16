@@ -28,7 +28,7 @@ function viewMatsogi(){
         <div><span class="dot" style="background:var(--hong)"></span><span><b>HONG = jangan</b>Pad merah ialah umpan</span></div>
       </div>
     </section>
-    <main>
+    <main>${whyBox('matsogi')}
       <div class="tiles">
         <div class="st"><span class="label">Terpantas</span><div class="v">${m.bestRt ? m.bestRt+'<small> ms</small>' : '–'}</div></div>
         <div class="st"><span class="label">Rekod ${L.nm}</span><div class="v">${lastBest ? lastBest.avg+'<small> ms</small>' : '–'}</div></div>

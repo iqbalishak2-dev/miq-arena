@@ -16,7 +16,7 @@ function viewDuel(){
         <div><span class="dot" style="background:var(--chong)"></span><span><b>CHONG</b>Pemain bawah</span></div>
       </div>
     </section>
-    <main>
+    <main>${whyBox('duel')}
       <form class="card" id="dForm" style="display:flex;flex-direction:column;gap:16px" novalidate>
         <div class="field">
           <label for="dP1" class="label">Nama pemain Hong (atas)</label>

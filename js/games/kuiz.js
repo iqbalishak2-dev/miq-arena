@@ -27,7 +27,7 @@ function viewKuiz(){
         <div><span class="dot" style="background:#fff;display:grid;place-items:center;color:#0a0a0a;font-weight:700;font-size:12px">?</span><span><b>Junbi</b>Istilah ke maksud</span></div>
       </div>
     </section>
-    <main>
+    <main>${whyBox('kuiz')}
       <section style="display:flex;flex-direction:column;gap:10px">
         <h2 style="font-size:18px;font-weight:700">Pilih tahap</h2>
         ${rows}

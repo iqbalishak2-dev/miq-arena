@@ -16,7 +16,7 @@ function viewTarik(){
         <div><span class="dot" style="background:var(--chong)"></span><span><b>CHONG</b>Pemain bawah</span></div>
       </div>
     </section>
-    <main>
+    <main>${whyBox('tarik')}
       <form class="card" id="tForm" style="display:flex;flex-direction:column;gap:16px" novalidate>
         <div class="field"><label for="tP1" class="label">Nama pemain Hong (atas)</label><input id="tP1" maxlength="14" autocomplete="off" value="${esc(S.duel.p2 || 'Lawan')}"></div>
         <div class="field"><label for="tP2" class="label">Nama pemain Chong (bawah)</label><input id="tP2" maxlength="14" autocomplete="off" value="${esc(S.profile.nama)}"></div>

@@ -27,7 +27,7 @@ function viewMemori(){
         <div><span class="dot" style="background:var(--y);display:grid;place-items:center">${ic('star','#0a0a0a',14)}</span><span><b>Gambar</b>Bintang dengan bintang</span></div>
       </div>
     </section>
-    <main>
+    <main>${whyBox('memori')}
       <section style="display:flex;flex-direction:column;gap:10px">
         <h2 style="font-size:18px;font-weight:700">Pilih tahap</h2>
         ${rows}

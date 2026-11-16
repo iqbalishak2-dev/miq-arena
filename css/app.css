@@ -411,3 +411,10 @@ nav.bn svg{width:18px;height:18px}
 .lbtabs .chip{flex:none;flex-direction:row;padding:8px 14px;min-height:42px;white-space:nowrap}
 .lbtabs .chip.on{border-color:var(--ink)}
 #lbName{height:48px;border:1px solid var(--line);border-radius:8px;padding:0 12px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+
+/* Kenapa main */
+.why{display:flex;flex-wrap:wrap;gap:4px}
+.why i{font-style:normal;font-size:11px;font-weight:700;line-height:1;padding:5px 8px;border-radius:999px;background:#fff4b8;color:#5a4500}
+.why.dk i{background:rgba(255,255,255,.18);color:#fff}
+.whybox{display:flex;flex-direction:column;gap:8px;padding:16px 18px;border-left:4px solid var(--y)}
+.whybox p{margin:0;font-size:14px;line-height:21px}

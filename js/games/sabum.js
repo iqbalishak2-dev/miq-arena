@@ -36,7 +36,7 @@ function viewSabum(){
         <div><span class="dot" style="background:#fff"></span><span><b>Ulang</b>Tekan ikut urutan</span></div>
       </div>
     </section>
-    <main>
+    <main>${whyBox('sabum')}
       <section style="display:flex;flex-direction:column;gap:10px">
         <h2 style="font-size:18px;font-weight:700">Pilih tahap</h2>
         ${rows}

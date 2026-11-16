@@ -11,7 +11,7 @@ function viewRun(){
         <p style="margin:0;line-height:20px;color:rgba(255,255,255,.75);max-width:320px">Lari sejauh mungkin. Elak halangan, tendang papan dan kutip bintang. Anda ada 3 nyawa.</p>
       </div>
     </section>
-    <main>
+    <main>${whyBox('run')}
       <div class="tiles">
         <div class="st"><span class="label">Rekod</span><div class="v">${r.best ? fmt(r.best)+'<small> m</small>' : '–'}</div></div>
         <div class="st"><span class="label">Bintang</span><div class="v">${r.bestStars || '–'}</div></div>

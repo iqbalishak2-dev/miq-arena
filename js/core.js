@@ -46,21 +46,27 @@ const RANKS = [
   {nm:'Biru', xp:3000}, {nm:'Merah', xp:5000}, {nm:'Hitam', xp:8000}
 ];
 const GAMES = [
-  {id:'matsogi', nm:'Matsogi Reflex', d:'Serang Chong, elak Hong', icon:'zap', ready:true, store:'mats'},
-  {id:'run', nm:'Dojang Run', d:'Lari, lompat dan tendang papan', icon:'feet', ready:true, store:'run'},
-  {id:'duel', nm:'Duel Refleks', d:'Siapa tekan dahulu bila SIJAK!', icon:'zap', ready:true, store:'duel', mp:true},
-  {id:'tarik', nm:'Tarik Tali', d:'Tarik tali pinggang hitam ke pihak anda', icon:'feet', ready:true, store:'tarik', mp:true},
-  {id:'klumba', nm:'Kyokpa Lumba', d:'Siapa paling tepat memecah papan', icon:'target', ready:true, store:'klumba', mp:true},
-  {id:'serang', nm:'Serang & Tangkis', d:'Bergilir menyerang dan menangkis', icon:'shield', ready:true, store:'serang', mp:true},
-  {id:'tangkis', nm:'Tangkis!', d:'Tangkis serangan dari 4 arah', icon:'shield', ready:true, store:'tgk'},
-  {id:'kyokpa', nm:'Kyokpa Timing', d:'Pecahkan papan tepat masa', icon:'target', ready:true, store:'kyok'},
-  {id:'kuiz', nm:'Kuiz Asas', d:'Kiraan dan arahan dalam kelas', icon:'lang', ready:true, store:'kuiz'},
-  {id:'memori', nm:'Memori Padan', d:'Cari 2 kad nombor atau gambar yang sama', icon:'grid', ready:true, store:'memo'},
-  {id:'sabum', nm:'Ikut Sabum', d:'Ulang urutan pad yang menyala', icon:'repeat', ready:true, store:'sim'},
-  {id:'tali', nm:'Susun Tali Pinggang', d:'Susun ikut turutan Kup', icon:'layers', ready:true, store:'belt'},
-  {id:'tul', nm:'Susun Tul', d:'Susun pergerakan ikut turutan', icon:'list'},
-  {id:'teori', nm:'Teori Grading Quest', d:'Makna Tul dan sejarah ITF', icon:'book'}
+  {id:'matsogi', nm:'Matsogi Reflex', d:'Serang Chong, elak Hong', icon:'zap', ready:true, store:'mats', why:['Refleks', 'Disiplin'], wd:"Melatih masa reaksi dan kawalan diri. Dalam sparring, kita serang bila ada peluang, bukan setiap kali lawan bergerak."},
+  {id:'run', nm:'Dojang Run', d:'Lari, lompat dan tendang papan', icon:'feet', ready:true, store:'run', why:['Ketangkasan', 'Koordinasi'], wd:"Melatih mata dan tangan bekerjasama dengan pantas, serta kekal fokus walaupun semakin laju."},
+  {id:'duel', nm:'Duel Refleks', d:'Siapa tekan dahulu bila SIJAK!', icon:'zap', ready:true, store:'duel', mp:true, why:['Refleks', 'Sportsmanship'], wd:"Melatih reaksi pantas pada arahan Sijak, dan cara menang atau kalah dengan hormat."},
+  {id:'tarik', nm:'Tarik Tali', d:'Tarik tali pinggang hitam ke pihak anda', icon:'feet', ready:true, store:'tarik', mp:true, why:['Stamina', 'Semangat'], wd:"Melatih kelajuan dan tahan lasak. Jangan putus asa sehingga tamat, macam semangat Indomitable Spirit."},
+  {id:'klumba', nm:'Kyokpa Lumba', d:'Siapa paling tepat memecah papan', icon:'target', ready:true, store:'klumba', mp:true, why:['Ketepatan masa', 'Tenang'], wd:"Melatih timing yang tepat walaupun dalam tekanan pertandingan."},
+  {id:'serang', nm:'Serang & Tangkis', d:'Bergilir menyerang dan menangkis', icon:'shield', ready:true, store:'serang', mp:true, why:['Membaca lawan', 'Pertahanan'], wd:"Melatih membaca serangan lawan dan bertukar antara menyerang dan bertahan, macam dalam Matsogi."},
+  {id:'tangkis', nm:'Tangkis!', d:'Tangkis serangan dari 4 arah', icon:'shield', ready:true, store:'tgk', why:['Refleks', 'Kesedaran arah'], wd:"Melatih mata membaca serangan dari setiap arah dan memilih tangkisan yang betul dengan pantas."},
+  {id:'kyokpa', nm:'Kyokpa Timing', d:'Pecahkan papan tepat masa', icon:'target', ready:true, store:'kyok', why:['Fokus', 'Ketepatan masa'], wd:"Memecah papan perlukan timing dan tumpuan penuh. Game ini melatih kedua-duanya."},
+  {id:'kuiz', nm:'Kuiz Asas', d:'Kiraan dan arahan dalam kelas', icon:'lang', ready:true, store:'kuiz', why:['Istilah', 'Faham arahan'], wd:"Membantu faham kiraan dan arahan Sabum dalam bahasa Korea, supaya lebih yakin di kelas."},
+  {id:'memori', nm:'Memori Padan', d:'Cari 2 kad nombor atau gambar yang sama', icon:'grid', ready:true, store:'memo', why:['Memori', 'Tumpuan'], wd:"Melatih daya ingatan dan tumpuan mata, kemahiran yang penting untuk menghafal Tul."},
+  {id:'sabum', nm:'Ikut Sabum', d:'Ulang urutan pad yang menyala', icon:'repeat', ready:true, store:'sim', why:['Memori urutan', 'Dengar arahan'], wd:"Melatih mengingat urutan langkah, sama seperti mengingat pergerakan dalam Tul."},
+  {id:'tali', nm:'Susun Tali Pinggang', d:'Susun ikut turutan Kup', icon:'layers', ready:true, store:'belt', why:['Pengetahuan', 'Persediaan grading'], wd:"Mengenal turutan tali pinggang dan Kup, serta maknanya, sebagai persediaan grading."},
+  {id:'tul', nm:'Susun Tul', d:'Susun pergerakan ikut turutan', icon:'list', why:['Memori', 'Persediaan grading'], wd:"Menghafal turutan pergerakan Tul sebelum grading."},
+  {id:'teori', nm:'Teori Grading Quest', d:'Makna Tul dan sejarah ITF', icon:'book', why:['Pengetahuan', 'Persediaan grading'], wd:"Belajar makna Tul dan sejarah ITF untuk soalan teori grading."}
 ];
+// Kenapa main game ini? (kemahiran yang dilatih)
+const whyTags = (g, dark) => g.why ? `<span class="why ${dark?'dk':''}">${g.why.map(t => `<i>${t}</i>`).join('')}</span>` : '';
+function whyBox(id){
+  const g = GAMES.find(x => x.id === id); if (!g || !g.why) return '';
+  return `<section class="card whybox"><span class="label">Kenapa main game ini?</span>${whyTags(g)}<p>${esc(g.wd)}</p></section>`;
+}
 const LEVELS = [
   {id:'putih', nm:'Putih',  col:'#ffffff', cues:15, win:1400, pass:750, trap:0,   feint:0,   combo:0,   desc:'Pad biru sahaja'},
   {id:'kuning',nm:'Kuning', col:'#eab308', cues:18, win:1200, pass:680, trap:.15, feint:0,   combo:0,   desc:'Umpan merah mula muncul'},
@@ -411,14 +417,14 @@ const mpStat = g => S[g.store].plays ? S[g.store].plays+' perlawanan' : 'Belum d
 function mpCards(big){
   return GAMES.filter(g => g.mp).map(g => `<a class="mpcard ${big?'mpbig':''}" href="#${g.id}"><span class="vs">VS</span>
     <span class="ic">${ic(g.icon,'#0a0a0a')}</span>
-    ${big ? `<span class="txt"><b>${g.nm}</b><span class="d">${g.d}</span><span class="d" style="font-weight:600">${mpStat(g)}</span></span>` : `<b>${g.nm}</b><span class="d">${g.d}</span><span class="pill">2 pemain</span>`}
+    ${big ? `<span class="txt"><b>${g.nm}</b><span class="d">${g.d}</span>${whyTags(g, true)}<span class="d" style="font-weight:600">${mpStat(g)}</span></span>` : `<b>${g.nm}</b><span class="d">${g.d}</span>${whyTags(g, true)}<span class="pill">2 pemain</span>`}
   </a>`).join('');
 }
 const mpHead = (t, link) => `<div class="sechead"><div class="mphead"><span class="dots" aria-hidden="true"><span style="background:var(--hong)"></span><span style="background:var(--chong)"></span></span><h2>${t}</h2></div>${link ? `<a href="#berdua" style="font-size:13px;font-weight:600">Lihat semua ›</a>` : ''}</div>`;
 function gameCards(){
   return GAMES.filter(g => !g.mp).map(g => g.ready
-    ? `<a class="gcard" href="#${g.id}"><span class="ic">${ic(g.icon,'#0a0a0a')}</span><b>${g.nm}</b><span class="d">${g.d}</span><span class="pill dark-p">${g.mp ? '2 pemain' : g.id==='run' ? (S.run.best ? 'Rekod '+fmt(S.run.best)+' m' : 'Baharu!') : S[g.store].passedTop ? 'Semua lulus' : 'Tahap '+Math.min(S[g.store].unlocked+1,levelsOf(g.id).length)+'/'+levelsOf(g.id).length}</span></a>`
-    : `<div class="gcard soon"><span class="ic">${ic(g.icon,'#6b6b70')}</span><b class="muted">${g.nm}</b><span class="d">${g.d}</span><span class="pill" style="color:var(--muted)">${ic('lock','#6b6b70',12)}Akan datang</span></div>`
+    ? `<a class="gcard" href="#${g.id}"><span class="ic">${ic(g.icon,'#0a0a0a')}</span><b>${g.nm}</b><span class="d">${g.d}</span>${whyTags(g)}<span class="pill dark-p">${g.mp ? '2 pemain' : g.id==='run' ? (S.run.best ? 'Rekod '+fmt(S.run.best)+' m' : 'Baharu!') : S[g.store].passedTop ? 'Semua lulus' : 'Tahap '+Math.min(S[g.store].unlocked+1,levelsOf(g.id).length)+'/'+levelsOf(g.id).length}</span></a>`
+    : `<div class="gcard soon"><span class="ic">${ic(g.icon,'#6b6b70')}</span><b class="muted">${g.nm}</b><span class="d">${g.d}</span>${whyTags(g)}<span class="pill" style="color:var(--muted)">${ic('lock','#6b6b70',12)}Akan datang</span></div>`
   ).join('');
 }
 function viewGames(){

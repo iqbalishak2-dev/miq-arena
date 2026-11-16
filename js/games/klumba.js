@@ -16,7 +16,7 @@ function viewKlumba(){
         <div><span class="dot" style="background:var(--chong)"></span><span><b>CHONG</b>Pemain bawah</span></div>
       </div>
     </section>
-    <main>
+    <main>${whyBox('klumba')}
       <form class="card" id="kForm" style="display:flex;flex-direction:column;gap:16px" novalidate>
         <div class="field"><label for="kP1" class="label">Nama pemain Hong (atas)</label><input id="kP1" maxlength="14" autocomplete="off" value="${esc(S.duel.p2 || 'Lawan')}"></div>
         <div class="field"><label for="kP2" class="label">Nama pemain Chong (bawah)</label><input id="kP2" maxlength="14" autocomplete="off" value="${esc(S.profile.nama)}"></div>

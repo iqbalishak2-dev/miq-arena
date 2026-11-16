@@ -26,7 +26,7 @@ function viewKyokpa(){
         <div><span class="dot" style="background:#fff;width:8px;border-radius:3px"></span><span><b>Jarum putih</b>Bergerak kiri-kanan</span></div>
       </div>
     </section>
-    <main>
+    <main>${whyBox('kyokpa')}
       <div class="tiles">
         <div class="st"><span class="label">Rekod ${L.nm}</span><div class="v">${b ? fmt(b.score) : '–'}</div></div>
         <div class="st"><span class="label">Pecah</span><div class="v">${b ? b.broken+'<small>/'+L.sets+'</small>' : '–'}</div></div>
