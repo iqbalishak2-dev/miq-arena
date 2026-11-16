@@ -613,13 +613,7 @@ function lbInner(){
   if (p.saved) top = `<div class="lbok">✓ Disimpan di tempat #${p.rank}. Tekan <b>Main lagi</b> untuk pemain seterusnya.</div>`;
   else if (p.s <= 0) top = '';
   else if (!fits) top = `<p class="muted" style="margin:0;font-size:13px">Markah ini belum cukup untuk masuk ${LB_MAX} teratas. Cuba lagi!</p>`;
-  else top = `<form id="lbForm" style="display:flex;flex-direction:column;gap:8px" novalidate>
-      <label for="lbName" class="label">Tulis nama anda · tempat #${rank}</label>
-      <div style="display:flex;gap:8px"><input id="lbName" maxlength="16" autocomplete="off" placeholder="Nama panggilan" style="flex:1;min-width:0">
-      <button class="btn p" type="submit" style="flex:none">Simpan</button></div>
-      ${(S.lbNames||[]).length ? `<div class="lbchips">${S.lbNames.map(n => `<button type="button" class="chip" data-lbn="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}
-      <span class="err" id="lbErr" role="alert"></span>
-    </form>`;
+  else top = `<button class="btn p full" type="button" id="lbOpen">✍️ Tulis nama · tempat #${rank}</button>`;
   return `<div style="padding:16px 20px 12px;display:flex;flex-direction:column;gap:10px">
       <div class="sechead"><h2 style="font-size:16px">${ic('trophy','#0a0a0a',18)} Papan markah</h2><span class="muted" style="font-size:12px">${esc(p.title)}</span></div>
       ${top}
@@ -627,10 +621,35 @@ function lbInner(){
     ${lbRows(p.key, p.savedT)}
     <a class="trow" href="#papan:${p.key}" style="justify-content:center;font-size:13px;font-weight:600">Lihat semua papan markah ›</a>`;
 }
+// Pop up isi nama (muncul sendiri selepas game tamat jika markah masuk 10 teratas)
+function lbPopup(){
+  const p = LBP; if (!p || p.saved || document.getElementById('lbPop')) return;
+  const rank = lbList(p.key).filter(e => e.s >= p.s).length + 1;
+  if (p.s <= 0 || rank > LB_MAX) return;
+  const el = document.createElement('div');
+  el.className = 'updwrap'; el.id = 'lbPop';
+  el.innerHTML = `<form id="lbForm" class="card updnew" role="dialog" aria-modal="true" aria-labelledby="lbPT" novalidate>
+    <span class="pill y" style="align-self:center">${ic('trophy','#0a0a0a',14)} Tempat #${rank}</span>
+    <h2 id="lbPT" style="margin:0;font-size:22px;text-align:center">${rank === 1 ? '🥇 Markah tertinggi!' : '🎉 Masuk 10 teratas!'}</h2>
+    <p class="muted" style="margin:0;text-align:center;font-size:14px">${esc(p.d)}</p>
+    <label for="lbName" class="label">Tulis nama anda untuk papan markah</label>
+    <input id="lbName" maxlength="16" autocomplete="off" enterkeyhint="done" placeholder="Nama panggilan">
+    ${(S.lbNames||[]).length ? `<div class="lbchips">${S.lbNames.map(n => `<button type="button" class="chip" data-lbn="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}
+    <span class="err" id="lbErr" role="alert"></span>
+    <button class="btn p full" type="submit">Simpan</button>
+    <button class="btn g full" type="button" id="lbSkip">Langkau</button>
+  </form>`;
+  document.body.appendChild(el);
+  if (isEN()) trNode(el);
+  el.onclick = e => { if (e.target === el) el.remove(); };
+  setTimeout(() => { const i = document.getElementById('lbName'); if (i) i.focus(); }, 50);
+}
+window.addEventListener('hashchange', () => { const p = document.getElementById('lbPop'); if (p) p.remove(); });
 // Dipanggil dalam skrin keputusan setiap game solo
 function lbBlock(game, lvl, s, d){
   const lv = lvl ? (lbLevels(game).find(x => x.id === lvl) || {}).nm : '';
   LBP = {key: lbKey(game, lvl), s: Math.round(s) || 0, d, title: lv ? 'Tahap ' + lv : '', saved:false};
+  const mine = LBP; setTimeout(() => { if (LBP === mine && document.getElementById('lbBox')) lbPopup(); }, 700);
   return `<section class="card lb" id="lbBox" style="padding:0;overflow:hidden">${lbInner()}</section>`;
 }
 function lbSave(){
@@ -644,11 +663,14 @@ function lbSave(){
   S.lbNames = [n, ...(S.lbNames||[]).filter(x => x.toLowerCase() !== n.toLowerCase())].slice(0, 8);
   save();
   LBP.saved = true; LBP.savedT = t; LBP.rank = list.findIndex(e => e.t === t) + 1;
-  document.getElementById('lbBox').innerHTML = lbInner();
+  const pop = document.getElementById('lbPop'); if (pop) pop.remove();
+  const box = document.getElementById('lbBox'); if (box) box.innerHTML = lbInner();
   buzz(30);
 }
 document.addEventListener('submit', e => { if (e.target.id === 'lbForm') { e.preventDefault(); lbSave(); } });
 document.addEventListener('click', e => {
+  if (e.target.closest('#lbOpen')) return lbPopup();
+  if (e.target.closest('#lbSkip')) { const p = document.getElementById('lbPop'); if (p) p.remove(); return; }
   const c = e.target.closest('[data-lbn]');
   if (c) { const i = document.getElementById('lbName'); if (i) { i.value = c.dataset.lbn; document.getElementById('lbErr').textContent = ''; } }
 });

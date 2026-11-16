@@ -293,6 +293,8 @@ const I18N = {
   'Mula semula': 'Start over', 'Padam profil, XP, lencana dan semua rekod dalam telefon ini.': 'Delete the profile, XP, badges and all records on this phone.',
   'Padam semua data': 'Delete all data', 'Pasti? Ini tidak boleh dibatalkan.': 'Sure? This cannot be undone.', 'Ya, padam': 'Yes, delete',
   'Papan markah': 'Leaderboard', 'Papan markah setiap game': 'Leaderboard for each game', 'Lihat semua papan markah ›': 'See all leaderboards ›',
+  '🥇 Markah tertinggi!': '🥇 Top score!', '🎉 Masuk 10 teratas!': '🎉 You made the top 10!', 'Tulis nama anda untuk papan markah': 'Type your name for the leaderboard', 'Langkau': 'Skip',
+  'Papan markah: tulis nama dalam pop up selepas tamat game': 'Leaderboard: type your name in a pop-up after the game ends',
   'Simpan': 'Save', 'Nama panggilan': 'Nickname', 'Tulis nama dahulu.': 'Type a name first.', 'Pemain': 'Player',
   'Belum ada nama. Jadilah yang pertama!': 'No names yet. Be the first!', 'Cuba lagi!': 'Try again!',
   'Kosongkan papan ini': 'Clear this board', 'Ya, kosongkan': 'Yes, clear', 'untuk pemain seterusnya.': 'for the next player.', 'Main lagi': 'Play again',
@@ -346,6 +348,8 @@ const I18N = {
 // Corak untuk teks yang mengandungi nama atau perkataan berubah. (bahagian dalam kurungan diterjemah semula)
 const I18N_PATTERNS = [
   [/^Tulis nama anda · tempat #(\d+)$/, m => `Type your name · place #${m[1]}`],
+  [/^✍️ Tulis nama · tempat #(\d+)$/, m => `✍️ Type your name · place #${m[1]}`],
+  [/^Tempat #(\d+)$/, m => `Place #${m[1]}`],
   [/^✓ Disimpan di tempat #(\d+)\. Tekan$/, m => `✓ Saved in place #${m[1]}. Tap`],
   [/^Markah ini belum cukup untuk masuk (\d+) teratas\. Cuba lagi!$/, m => `This score is not enough for the top ${m[1]}. Try again!`],
   [/^Main (.+)$/, m => `Play ${m[1]}`],
