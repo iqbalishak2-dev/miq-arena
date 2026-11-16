@@ -322,6 +322,11 @@ const I18N = {
   "Mengenal turutan tali pinggang dan Kup, serta maknanya, sebagai persediaan grading.": "Learn the order of belts and Kup and what they mean, as preparation for grading.",
   "Menghafal turutan pergerakan Tul sebelum grading.": "Memorise the order of Tul movements before grading.",
   "Belajar makna Tul dan sejarah ITF untuk soalan teori grading.": "Learn the meaning of each Tul and ITF history for grading theory questions.",
+  'Versi baru tersedia': 'New version available', 'Tekan untuk dapatkan ciri terkini.': 'Tap to get the latest features.', 'Kemas kini': 'Update',
+  '✅ MIQ Arena dikemas kini!': '✅ MIQ Arena has been updated!', 'Apa yang baru': "What's new", 'OK, faham': 'OK, got it',
+  'Notifikasi bila ada versi baru': 'A notification when a new version is out',
+  'Tulis nama selepas tamat game & papan markah 10 teratas': 'Type your name after a game & top 10 leaderboard',
+  'Setiap game ada penerangan "Kenapa main game ini?"': 'Every game explains "Why play this game?"',
   '/saat': '/sec', 'Bahasa': 'Language', 'Pilih bahasa app': 'Choose the app language',
 };
 

@@ -418,3 +418,15 @@ nav.bn svg{width:18px;height:18px}
 .why.dk i{background:rgba(255,255,255,.18);color:#fff}
 .whybox{display:flex;flex-direction:column;gap:8px;padding:16px 18px;border-left:4px solid var(--y)}
 .whybox p{margin:0;font-size:14px;line-height:21px}
+
+/* Notifikasi kemas kini */
+.updbar{position:fixed;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:60;max-width:560px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 10px 10px 14px;background:#0a0a0a;color:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.3);animation:updIn .3s ease-out}
+.updbar .ud{font-size:20px}
+.updbar .ut{flex:1;min-width:0;display:flex;flex-direction:column;font-size:12px;line-height:16px;color:rgba(255,255,255,.75)}
+.updbar .ut b{color:#fff;font-size:14px}
+.updbar .btn{min-height:40px;padding:0 14px;flex:none}
+.updbar .ux{background:none;border:0;color:rgba(255,255,255,.6);font-size:16px;width:32px;height:40px;cursor:pointer}
+@keyframes updIn{from{transform:translateY(20px);opacity:0}}
+.updwrap{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:20px}
+.updnew{max-width:420px;width:100%;display:flex;flex-direction:column;gap:12px;padding:22px;animation:updIn .3s ease-out}
+.updnew ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:20px}
