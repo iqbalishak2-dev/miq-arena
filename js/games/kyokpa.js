@@ -173,7 +173,7 @@ function kFinish(){
       <span class="label">Markah${isNew ? ' · <span style="color:var(--ok)">rekod baru</span>' : ''}</span>
       <span class="pill y" style="margin-top:8px">+${xpGain} XP${rankAfter!==rankBefore ? ' · Pangkat '+rankAfter+'!' : ''}</span>
     </div>
-    ${dailyBanner(newDaily)}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
+    ${dailyBanner(newDaily)}${lbBlock('kyokpa', L.id, g.score, g.broken+'/'+L.sets+' pecah')}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
     <div class="grid2" style="gap:8px">
       <div class="st"><span class="label">Set pecah</span><div class="v">${g.broken}<small>/${L.sets}</small></div></div>
       <div class="st"><span class="label">Sempurna</span><div class="v">${g.perfect}</div></div>

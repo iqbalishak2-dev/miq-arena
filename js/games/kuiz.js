@@ -141,7 +141,7 @@ function qFinish(){
       <span class="label">Jawapan betul · ${fmt(g.score)} markah${isNew ? ' · <span style="color:var(--ok)">rekod baru</span>' : ''}</span>
       <span class="pill y" style="margin-top:8px">+${xpGain} XP${rankAfter!==rankBefore ? ' · Pangkat '+rankAfter+'!' : ''}</span>
     </div>
-    ${dailyBanner(newDaily)}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
+    ${dailyBanner(newDaily)}${lbBlock('kuiz', L.id, g.score, g.correct+'/'+QN+' betul')}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
     ${uniqWrong.length ? `<section class="card" style="padding:0;overflow:hidden">
       <h2 style="padding:16px 20px 10px;font-size:16px;font-weight:700">Ulang kaji</h2>
       ${uniqWrong.map(w=>`<div class="trow"><b>${esc(w[0])}</b><span>${esc(w[1])}</span></div>`).join('')}

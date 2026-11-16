@@ -129,7 +129,7 @@ function tFinish(timeUp){
       <span class="label">${g.err} kesilapan · ${fmt(score)} markah${isNew ? ' · <span style="color:var(--ok)">rekod baru</span>' : ''}</span>
       <span class="pill y" style="margin-top:8px">+${xpGain} XP${rankAfter!==rankBefore ? ' · Pangkat '+rankAfter+'!' : ''}</span>
     </div>
-    ${dailyBanner(newDaily)}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
+    ${dailyBanner(newDaily)}${lbBlock('tali', L.id, score, done ? secs+' saat · '+g.err+' kesilapan' : g.placed+'/'+g.order.length+' disusun')}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
     <section class="card" style="padding:0;overflow:hidden">
       <h2 style="padding:16px 20px 10px;font-size:16px;font-weight:700">Turutan betul dan maksud warna</h2>
       ${g.order.map(b => `<div class="trow" style="align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:6px;flex:1">${beltBar(b,'100%')}<span style="font-size:13px;font-weight:700">${b.nm} <span class="muted" style="font-weight:500">· ${b.kup}</span></span>${!b.tip && B_MEAN[b.nm] ? `<span class="muted" style="font-size:12px;line-height:17px">${B_MEAN[b.nm]}</span>` : ''}</div></div>`).join('')}

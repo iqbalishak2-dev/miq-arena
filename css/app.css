@@ -399,3 +399,15 @@ nav.bn svg{width:18px;height:18px}
   .rctl button{min-height:60px;font-size:12px}
   #toast{font-size:44px}
 }
+
+/* Papan markah */
+.lbrow.me{background:#fff7cc;box-shadow:inset 3px 0 0 var(--y)}
+.lbn{width:30px;text-align:center;font-weight:800;font-size:15px;flex:none}
+.lbnm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbok{background:#e7f8ee;color:var(--ok);border-radius:10px;padding:10px 12px;font-size:13px;font-weight:600;line-height:1.45}
+.lbchips{display:flex;flex-wrap:wrap;gap:6px}
+.lbchips .chip{min-height:36px;padding:6px 12px;flex-direction:row}
+.lbtabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.lbtabs .chip{flex:none;flex-direction:row;padding:8px 14px;min-height:42px;white-space:nowrap}
+.lbtabs .chip.on{border-color:var(--ink)}
+#lbName{height:48px;border:1px solid var(--line);border-radius:8px;padding:0 12px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}

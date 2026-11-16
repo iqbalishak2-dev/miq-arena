@@ -279,11 +279,22 @@ const I18N = {
   'Data hilang jika data browser dipadam atau telefon ditukar.': 'Data is lost if browser data is cleared or the phone is changed.',
   'Mula semula': 'Start over', 'Padam profil, XP, lencana dan semua rekod dalam telefon ini.': 'Delete the profile, XP, badges and all records on this phone.',
   'Padam semua data': 'Delete all data', 'Pasti? Ini tidak boleh dibatalkan.': 'Sure? This cannot be undone.', 'Ya, padam': 'Yes, delete',
+  'Papan markah': 'Leaderboard', 'Papan markah setiap game': 'Leaderboard for each game', 'Lihat semua papan markah ›': 'See all leaderboards ›',
+  'Simpan': 'Save', 'Nama panggilan': 'Nickname', 'Tulis nama dahulu.': 'Type a name first.', 'Pemain': 'Player',
+  'Belum ada nama. Jadilah yang pertama!': 'No names yet. Be the first!', 'Cuba lagi!': 'Try again!',
+  'Kosongkan papan ini': 'Clear this board', 'Ya, kosongkan': 'Yes, clear', 'untuk pemain seterusnya.': 'for the next player.', 'Main lagi': 'Play again',
+  '# teratas setiap game. Disimpan dalam peranti ini sahaja.': 'Top # for each game. Stored on this device only.',
+  '# ms': '# ms', '# m': '# m', '#% tepat': '#% accurate', '#/# pecah': '#/# broken', '#/# betul': '#/# correct', '# cubaan': '# tries', '# saat': '# sec',
+  '# langkah': '# steps', '# kesilapan': '# mistakes', '#/# disusun': '#/# placed', '#/# ditangkis': '#/# blocked', '# papan': '# boards',
   '/saat': '/sec', 'Bahasa': 'Language', 'Pilih bahasa app': 'Choose the app language',
 };
 
 // Corak untuk teks yang mengandungi nama atau perkataan berubah. (bahagian dalam kurungan diterjemah semula)
 const I18N_PATTERNS = [
+  [/^Tulis nama anda · tempat #(\d+)$/, m => `Type your name · place #${m[1]}`],
+  [/^✓ Disimpan di tempat #(\d+)\. Tekan$/, m => `✓ Saved in place #${m[1]}. Tap`],
+  [/^Markah ini belum cukup untuk masuk (\d+) teratas\. Cuba lagi!$/, m => `This score is not enough for the top ${m[1]}. Try again!`],
+  [/^Main (.+)$/, m => `Play ${m[1]}`],
   [/^Hai, (.+)!$/, m => `Hi, ${m[1]}!`],
   [/^Mula tahap (.+)$/, m => `Start ${tr0(m[1])} level`],
   [/^Tahap (.+) kini dibuka!$/, m => `${tr0(m[1])} level unlocked!`],

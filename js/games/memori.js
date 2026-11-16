@@ -127,7 +127,7 @@ function mFinish(){
       <span class="label">${g.moves} cubaan · ${secs} saat${isNew ? ' · <span style="color:var(--ok)">rekod baru</span>' : ''}</span>
       <span class="pill y" style="margin-top:8px">+${xpGain} XP${rankAfter!==rankBefore ? ' · Pangkat '+rankAfter+'!' : ''}</span>
     </div>
-    ${dailyBanner(newDaily)}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
+    ${dailyBanner(newDaily)}${lbBlock('memori', L.id, score, '★'.repeat(stars)+' · '+g.moves+' cubaan · '+secs+' saat')}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
     <div class="tip">${stars === 3 ? 'Ingatan yang sangat tajam! Cuba sebut setiap pasangan dengan kuat semasa bermain.' : 'Petua: ingat kedudukan setiap kad yang anda buka, walaupun bukan pasangannya.'}</div>
     <div style="display:flex;flex-direction:column;gap:8px">
       <button class="btn p full" id="mAgain">Main lagi</button>

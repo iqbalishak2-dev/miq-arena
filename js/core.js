@@ -267,7 +267,7 @@ const BADGES = [
 
 // ================= Simpanan (telefon ini sahaja) =================
 const KEY = 'miq-arena-v1';
-const fresh = () => ({settings:{sound:true, vib:true, lang:'ms'}, profile:null, xp:0, rounds:0, days:{}, badges:{}, last:'matsogi', mats:{unlocked:0, best:{}, bestRt:null, plays:0, passedTop:false}, kyok:{unlocked:0, best:{}, plays:0, passedTop:false}, kuiz:{unlocked:0, best:{}, plays:0, passedTop:false}, memo:{unlocked:0, best:{}, plays:0, passedTop:false}, sim:{unlocked:0, best:{}, plays:0, passedTop:false}, belt:{unlocked:0, best:{}, plays:0, passedTop:false}, run:{best:0, bestStars:0, plays:0, totalM:0}, duel:{plays:0, fastest:null, p2:'Lawan'}, tarik:{plays:0, bestRate:0}, klumba:{plays:0, perfect:0}, serang:{plays:0, blocks:0}, tgk:{unlocked:0, best:{}, plays:0, passedTop:false}});
+const fresh = () => ({settings:{sound:true, vib:true, lang:'ms'}, profile:null, xp:0, rounds:0, days:{}, badges:{}, last:'matsogi', mats:{unlocked:0, best:{}, bestRt:null, plays:0, passedTop:false}, kyok:{unlocked:0, best:{}, plays:0, passedTop:false}, kuiz:{unlocked:0, best:{}, plays:0, passedTop:false}, memo:{unlocked:0, best:{}, plays:0, passedTop:false}, sim:{unlocked:0, best:{}, plays:0, passedTop:false}, belt:{unlocked:0, best:{}, plays:0, passedTop:false}, run:{best:0, bestStars:0, plays:0, totalM:0}, duel:{plays:0, fastest:null, p2:'Lawan'}, tarik:{plays:0, bestRate:0}, klumba:{plays:0, perfect:0}, serang:{plays:0, blocks:0}, tgk:{unlocked:0, best:{}, plays:0, passedTop:false}, lb:{}, lbNames:[]});
 let S = fresh(), storeOK = true;
 try {
   const raw = localStorage.getItem(KEY);
@@ -343,6 +343,7 @@ function route(){
   if (h === 'tetapan') return viewTetapan();
   if (h === 'berdua') return viewBerdua();
   if (h === 'rekod') return viewRekod();
+  if (h === 'papan' || h.startsWith('papan:')) return viewPapan(h.slice(6));
   if (h === 'profil') return viewProfil(false);
   return viewHome();
 }
@@ -475,6 +476,7 @@ function viewRekod(){
       <div class="ptitle"><h1>Rekod saya</h1></div>
       <p class="muted" style="margin:0 0 0 14px">Bandingkan dengan diri sendiri, minggu demi minggu.</p>
     </div>
+    <a class="btn d full" href="#papan">${ic('trophy','#f5c400',18)}Papan markah setiap game</a>
     <div class="grid2">
       <div class="dark" style="padding:16px;display:flex;flex-direction:column;gap:4px">
         <div class="stripe" style="right:-30px;top:auto;bottom:-30px;width:90px;height:90px"></div>
@@ -577,6 +579,105 @@ function viewRekod(){
       <div class="badges">${BADGES.map(b=>{const got=!!S.badges[b.id];return `<div class="badge ${got?'':'no'}"><span class="c">${ic('star', got?'#0a0a0a':'#6b6b70',18)}</span><small>${b.nm}</small><span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">${got?'diperoleh':'belum diperoleh'}</span></div>`}).join('')}</div>
     </section>
   </main>` + nav('rekod');
+  window.scrollTo(0,0);
+}
+
+
+// ================= Papan markah (leaderboard) =================
+// Selepas tamat game, pemain taip nama. 10 teratas setiap game/tahap disimpan dalam peranti ini.
+const LB_MAX = 10;
+let LBP = null; // keputusan yang menunggu nama
+const lbKey = (game, lvl) => lvl ? game + ':' + lvl : game;
+const lbList = key => (S.lb && S.lb[key]) || [];
+const lbMedal = i => i < 3 ? ['🥇','🥈','🥉'][i] : '#' + (i+1);
+const lbGames = () => GAMES.filter(g => g.ready && !g.mp);
+const lbLevels = id => id === 'run' ? [] : levelsOf(id);
+function lbRows(key, hi){
+  const L = lbList(key);
+  if (!L.length) return '<div class="trow"><span class="muted">Belum ada nama. Jadilah yang pertama!</span></div>';
+  return L.map((e, i) => `<div class="trow lbrow ${e.t === hi ? 'me' : ''}">
+    <span style="display:flex;align-items:center;gap:10px;min-width:0"><span class="lbn">${lbMedal(i)}</span>
+    <span style="display:flex;flex-direction:column;min-width:0"><b class="lbnm">${esc(e.n)}</b><span class="muted" style="font-size:12px">${esc(e.d)}</span></span></span>
+    <b>${fmt(e.s)}</b></div>`).join('');
+}
+function lbInner(){
+  const p = LBP, L = lbList(p.key);
+  const rank = L.filter(e => e.s >= p.s).length + 1, fits = rank <= LB_MAX;
+  let top;
+  if (p.saved) top = `<div class="lbok">✓ Disimpan di tempat #${p.rank}. Tekan <b>Main lagi</b> untuk pemain seterusnya.</div>`;
+  else if (p.s <= 0) top = '';
+  else if (!fits) top = `<p class="muted" style="margin:0;font-size:13px">Markah ini belum cukup untuk masuk ${LB_MAX} teratas. Cuba lagi!</p>`;
+  else top = `<form id="lbForm" style="display:flex;flex-direction:column;gap:8px" novalidate>
+      <label for="lbName" class="label">Tulis nama anda · tempat #${rank}</label>
+      <div style="display:flex;gap:8px"><input id="lbName" maxlength="16" autocomplete="off" placeholder="Nama panggilan" style="flex:1;min-width:0">
+      <button class="btn p" type="submit" style="flex:none">Simpan</button></div>
+      ${(S.lbNames||[]).length ? `<div class="lbchips">${S.lbNames.map(n => `<button type="button" class="chip" data-lbn="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}
+      <span class="err" id="lbErr" role="alert"></span>
+    </form>`;
+  return `<div style="padding:16px 20px 12px;display:flex;flex-direction:column;gap:10px">
+      <div class="sechead"><h2 style="font-size:16px">${ic('trophy','#0a0a0a',18)} Papan markah</h2><span class="muted" style="font-size:12px">${esc(p.title)}</span></div>
+      ${top}
+    </div>
+    ${lbRows(p.key, p.savedT)}
+    <a class="trow" href="#papan:${p.key}" style="justify-content:center;font-size:13px;font-weight:600">Lihat semua papan markah ›</a>`;
+}
+// Dipanggil dalam skrin keputusan setiap game solo
+function lbBlock(game, lvl, s, d){
+  const lv = lvl ? (lbLevels(game).find(x => x.id === lvl) || {}).nm : '';
+  LBP = {key: lbKey(game, lvl), s: Math.round(s) || 0, d, title: lv ? 'Tahap ' + lv : '', saved:false};
+  return `<section class="card lb" id="lbBox" style="padding:0;overflow:hidden">${lbInner()}</section>`;
+}
+function lbSave(){
+  const inp = document.getElementById('lbName'); if (!inp || !LBP || LBP.saved) return;
+  const n = inp.value.trim().replace(/\s+/g, ' ');
+  if (!n) { document.getElementById('lbErr').textContent = 'Tulis nama dahulu.'; inp.focus(); return; }
+  const t = Date.now(), list = lbList(LBP.key).slice();
+  list.push({n, s:LBP.s, d:LBP.d, t});
+  list.sort((a, b) => b.s - a.s || a.t - b.t);
+  S.lb[LBP.key] = list.slice(0, LB_MAX);
+  S.lbNames = [n, ...(S.lbNames||[]).filter(x => x.toLowerCase() !== n.toLowerCase())].slice(0, 8);
+  save();
+  LBP.saved = true; LBP.savedT = t; LBP.rank = list.findIndex(e => e.t === t) + 1;
+  document.getElementById('lbBox').innerHTML = lbInner();
+  buzz(30);
+}
+document.addEventListener('submit', e => { if (e.target.id === 'lbForm') { e.preventDefault(); lbSave(); } });
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-lbn]');
+  if (c) { const i = document.getElementById('lbName'); if (i) { i.value = c.dataset.lbn; document.getElementById('lbErr').textContent = ''; } }
+});
+
+function viewPapan(sel, ask){
+  const games = lbGames();
+  let [gid, lid] = (sel || '').split(':');
+  if (!games.find(g => g.id === gid)) gid = games[0].id;
+  const LV = lbLevels(gid);
+  if (LV.length && !LV.find(l => l.id === lid)) lid = (LV.find(l => lbList(lbKey(gid, l.id)).length) || LV[0]).id;
+  if (!LV.length) lid = '';
+  const key = lbKey(gid, lid), n = lbList(key).length;
+  app.innerHTML = header() + `<main class="wide">
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div class="ptitle"><h1>Papan markah</h1></div>
+      <p class="muted" style="margin:0 0 0 14px">${LB_MAX} teratas setiap game. Disimpan dalam peranti ini sahaja.</p>
+    </div>
+    <div class="lbtabs">${games.map(g => `<a class="chip ${g.id===gid?'on':''}" href="#papan:${g.id}" ${g.id===gid?'aria-current="true"':''}>${g.nm}</a>`).join('')}</div>
+    ${LV.length ? `<div class="lbtabs">${LV.map(l => `<a class="chip ${l.id===lid?'on':''}" href="#papan:${gid}:${l.id}"><span class="sw" style="width:22px;background:${l.col}"></span>${l.nm}</a>`).join('')}</div>` : ''}
+    <section class="card" style="padding:0;overflow:hidden">
+      <div class="thead label"><span>Pemain</span><span>Markah</span></div>
+      ${lbRows(key)}
+    </section>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <a class="btn p full" href="#${gid}">${ic('play','#0a0a0a',16)}Main ${esc(games.find(g => g.id === gid).nm)}</a>
+      ${n ? (ask
+        ? `<div class="grid2" style="gap:8px"><button class="btn g" id="lbNo">Batal</button><button class="btn d" id="lbYes" style="background:var(--bad)">Ya, kosongkan</button></div>`
+        : `<button class="btn g full" id="lbClr">Kosongkan papan ini</button>`) : ''}
+    </div>
+  </main>` + nav('rekod');
+  const sel2 = gid + (lid ? ':' + lid : '');
+  const q = id => document.getElementById(id);
+  if (q('lbClr')) q('lbClr').onclick = () => viewPapan(sel2, true);
+  if (q('lbNo')) q('lbNo').onclick = () => viewPapan(sel2);
+  if (q('lbYes')) q('lbYes').onclick = () => { delete S.lb[key]; save(); viewPapan(sel2); };
   window.scrollTo(0,0);
 }
 

@@ -352,7 +352,7 @@ function runFinish(){
       <span class="label">${fmt(score)} markah · rekod ${fmt(r.best)} m</span>
       <span class="pill y" style="margin-top:8px">+${xpGain} XP${rankAfter!==rankBefore ? ' · Pangkat '+rankAfter+'!' : ''}</span>
     </div>
-    ${dailyBanner(newDaily)}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
+    ${dailyBanner(newDaily)}${lbBlock('run', '', m, fmt(m)+' m · '+R.boards+' papan')}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
     <div class="grid2" style="gap:8px">
       <div class="st"><span class="label">Bintang</span><div class="v">${R.stars}</div></div>
       <div class="st"><span class="label">Papan pecah</span><div class="v">${R.boards}</div></div>

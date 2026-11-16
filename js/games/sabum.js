@@ -143,7 +143,7 @@ function sFinish(){
       <span class="label">${fmt(g.score)} markah${isNew ? ' · <span style="color:var(--ok)">rekod baru</span>' : ''}</span>
       <span class="pill y" style="margin-top:8px">+${xpGain} XP${rankAfter!==rankBefore ? ' · Pangkat '+rankAfter+'!' : ''}</span>
     </div>
-    ${dailyBanner(newDaily)}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
+    ${dailyBanner(newDaily)}${lbBlock('sabum', L.id, g.score, len+' langkah')}${newBadges.length ? `<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="label">Lencana baru</span><div class="newb">${newBadges.map(b=>`<span class="pill y">${ic('star','#0a0a0a',14)}${b.nm}</span>`).join('')}</div></div>` : ''}
     <div class="tip">${len >= 8 ? 'Tumpuan yang hebat! Sama seperti mengingat urutan gerakan dalam Tul.' : 'Petua: sebut warna atau gambar pad dengan perlahan semasa Sabum menunjukkan urutan.'}</div>
     <div style="display:flex;flex-direction:column;gap:8px">
       <button class="btn p full" id="sAgain">Main lagi</button>
