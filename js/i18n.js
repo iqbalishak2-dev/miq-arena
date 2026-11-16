@@ -310,6 +310,7 @@ const I18N = {
   'Nama kelas': 'Class name', 'Nama kelas baru': 'New class name', 'Contoh: BK5 Isnin': 'Example: BK5 Monday', 'Tambah': 'Add', 'Padam?': 'Delete?',
   'Kelas ini sudah ada.': 'This class already exists.', 'Tukar PIN': 'Change PIN', 'Kunci semula': 'Lock again',
   'Tukar nama terus dalam kotak. Padam kelas akan memadam markah kelas itu juga. Untuk padam satu nama, buka Papan markah dan tekan ✕.': 'Rename directly in the box. Deleting a class also deletes its scores. To delete one name, open Leaderboard and tap ✕.',
+  'Paparan penuh untuk tablet kecil (contoh Xiaomi/Redmi Pad 8–9 inci)': 'Full-screen layout for small tablets (e.g. Xiaomi/Redmi Pad 8–9 inch)',
   'Simpan': 'Save', 'Nama panggilan': 'Nickname', 'Tulis nama dahulu.': 'Type a name first.', 'Pemain': 'Player',
   'Belum ada nama. Jadilah yang pertama!': 'No names yet. Be the first!', 'Cuba lagi!': 'Try again!',
   'Kosongkan papan ini': 'Clear this board', 'Ya, kosongkan': 'Yes, clear', 'untuk pemain seterusnya.': 'for the next player.', 'Main lagi': 'Play again',
