@@ -1,4 +1,5 @@
 // MIQ Arena — permulaan app (dimuatkan selepas core.js dan semua fail game)
+applyTheme();
 route();
 applyLang();
 
@@ -22,13 +23,12 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 
 // ================= Notifikasi kemas kini =================
 // Tukar APP_VER dan WHATS_NEW setiap kali keluarkan versi baru (sama dengan VERSION dalam sw.js).
-const APP_VER = '1.10.0';
+const APP_VER = '1.11.0';
 const WHATS_NEW = [
-  'Game baharu: Flying Kick Dash! Tendang melompat, lalu celah pad dan naikkan tali pinggang',
-  'Paparan penuh untuk tablet kecil (contoh Xiaomi/Redmi Pad 8–9 inci)',
-  'Papan markah ikut kelas. Sabum boleh tambah kelas dalam Mod Sabum (Tetapan)',
-  'Papan markah: tulis nama dalam pop up selepas tamat game',
-  'Dojang Run: Mod Dikejar baharu! Lari daripada Harimau Putih atau Sabum Garang',
+  'Tema gelap! Pilih Cerah, Gelap atau Ikut telefon dalam Tetapan',
+  'Flying Kick Dash: mod Terbang baharu. Tahan untuk terbang, kutip bintang dan elak Hong!',
+  'Setiap game kini ada gambar sendiri',
+  'Butang Kongsi game ini: hantar game kepada kawan melalui WhatsApp',
 ];
 function showUpdateBar(){
   if (document.getElementById('updBar')) return;

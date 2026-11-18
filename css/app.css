@@ -470,3 +470,43 @@ nav.bn svg{width:18px;height:18px}
 .grid2 > .gcard:last-child:nth-child(odd) .art{aspect-ratio:32/9}
 .mpcard .vs{z-index:1}
 .sharebtn{align-self:flex-start;min-height:40px;padding:8px 14px;font-size:14px;margin-top:4px}
+
+/* ================= Tema gelap (html[data-theme=dark]) ================= */
+html[data-theme=dark]{color-scheme:dark;
+  --paper:#0d0d0f;--surface:#18181b;--line:#2c2c31;--muted:#a1a1aa;--fg:#f2f2f3;
+  --card:0 1px 2px rgba(0,0,0,.4),0 12px 32px -18px rgba(0,0,0,.7)}
+html[data-theme=dark],html[data-theme=dark] body{color:var(--fg)}
+html[data-theme=dark] a,html[data-theme=dark] nav.bn a.on{color:var(--fg)}
+html[data-theme=dark] :focus-visible{outline-color:var(--y)}
+html[data-theme=dark] .card,html[data-theme=dark] .gcard,html[data-theme=dark] .lvl,html[data-theme=dark] .badge,
+html[data-theme=dark] .st,html[data-theme=dark] .lrow{border-color:var(--line)}
+html[data-theme=dark] .gcard.soon{background:transparent}
+/* panel hitam: beri garis supaya nampak terpisah daripada latar gelap */
+html[data-theme=dark] .dark,html[data-theme=dark] .qcard,html[data-theme=dark] .chcard{background:#000;box-shadow:0 0 0 1px #26262b}
+html[data-theme=dark] .top,html[data-theme=dark] .hero{border-bottom:1px solid #1f1f23}
+/* butang/pil hitam menjadi cerah supaya kontras */
+html[data-theme=dark] .btn.d,html[data-theme=dark] .pill.dark-p,html[data-theme=dark] .drow a{background:#f2f2f3;color:#0a0a0a}
+html[data-theme=dark] .chip{background:var(--surface);color:var(--fg)}
+html[data-theme=dark] .chip.on,html[data-theme=dark] .lbchips .chip.on{background:var(--y);color:#0a0a0a;border-color:var(--y)}
+html[data-theme=dark] .lbtabs .chip.on,html[data-theme=dark] .lvl.sel{border-color:var(--y)}
+html[data-theme=dark] .chart i{background:#f2f2f3}
+html[data-theme=dark] .av.big{background:#f2f2f3;color:#0a0a0a}
+html[data-theme=dark] .field input,html[data-theme=dark] .lb input,html[data-theme=dark] #lbForm input,html[data-theme=dark] #pinF input,
+html[data-theme=dark] [data-cren],html[data-theme=dark] #cNew,html[data-theme=dark] #lbName{background:#0d0d0f;color:var(--fg);border-color:var(--line)}
+html[data-theme=dark] .drow .chk{background:var(--surface)}
+html[data-theme=dark] .mc .f.mn{color:var(--fg)}
+html[data-theme=dark] .lrow .n{background:#000}
+/* warna status lembut */
+html[data-theme=dark] .warnbar{background:#2a2108;color:#ffd84d}
+html[data-theme=dark] .opt.ok,html[data-theme=dark] .fb.ok,html[data-theme=dark] .mc.done .f.mn,html[data-theme=dark] .drow.done{background:#0f2a19;color:#86efac}
+html[data-theme=dark] .opt.no,html[data-theme=dark] .fb.no,html[data-theme=dark] .bbtn.wrong{background:#3a1114;color:#fca5a5}
+html[data-theme=dark] .lbrow.me{background:#2a2306}
+html[data-theme=dark] .lbdel{background:#3a1114;color:#fca5a5}
+html[data-theme=dark] .why i{background:rgba(245,196,0,.16);color:#ffd84d}
+html[data-theme=dark] .why.dk i{background:rgba(255,255,255,.18);color:#fff}
+/* ikon hitam di atas latar gelap → cerah; kekal hitam di atas latar kuning/putih */
+html[data-theme=dark] svg[stroke="#0a0a0a"]{stroke:var(--fg)}
+html[data-theme=dark] :is(.btn.p,.pill.y,.ic,.vs,.kick,.tgme,.rctl,.sstat.you,.chip.on,[style*="var(--y)"]) svg[stroke="#0a0a0a"]{stroke:#0a0a0a}
+html[data-theme=dark] .mpcard .ic svg[stroke="#0a0a0a"]{stroke:#0a0a0a}
+html[data-theme=dark] .av:not(.big){color:#0a0a0a}
+html[data-theme=dark] [style*="background:#0a0a0a"]:not(.mpcard),html[data-theme=dark] [style*="background:#111"]{box-shadow:0 0 0 1px rgba(255,255,255,.3)}

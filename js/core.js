@@ -288,7 +288,7 @@ const BADGES = [
 
 // ================= Simpanan (telefon ini sahaja) =================
 const KEY = 'miq-arena-v1';
-const fresh = () => ({settings:{sound:true, vib:true, lang:'ms'}, profile:null, xp:0, rounds:0, days:{}, badges:{}, last:'matsogi', mats:{unlocked:0, best:{}, bestRt:null, plays:0, passedTop:false}, kyok:{unlocked:0, best:{}, plays:0, passedTop:false}, kuiz:{unlocked:0, best:{}, plays:0, passedTop:false}, memo:{unlocked:0, best:{}, plays:0, passedTop:false}, sim:{unlocked:0, best:{}, plays:0, passedTop:false}, belt:{unlocked:0, best:{}, plays:0, passedTop:false}, run:{best:0, bestStars:0, plays:0, totalM:0, chase:{harimau:0, sabeum:0}}, duel:{plays:0, fastest:null, p2:'Lawan'}, tarik:{plays:0, bestRate:0}, klumba:{plays:0, perfect:0}, serang:{plays:0, blocks:0}, tgk:{unlocked:0, best:{}, plays:0, passedTop:false}, kick:{best:0, bestJet:0, plays:0, mode:'jump'}, lb:{}, lbNames:[], classes:[], curClass:'', sabumPin:''});
+const fresh = () => ({settings:{sound:true, vib:true, lang:'ms', theme:'auto'}, profile:null, xp:0, rounds:0, days:{}, badges:{}, last:'matsogi', mats:{unlocked:0, best:{}, bestRt:null, plays:0, passedTop:false}, kyok:{unlocked:0, best:{}, plays:0, passedTop:false}, kuiz:{unlocked:0, best:{}, plays:0, passedTop:false}, memo:{unlocked:0, best:{}, plays:0, passedTop:false}, sim:{unlocked:0, best:{}, plays:0, passedTop:false}, belt:{unlocked:0, best:{}, plays:0, passedTop:false}, run:{best:0, bestStars:0, plays:0, totalM:0, chase:{harimau:0, sabeum:0}}, duel:{plays:0, fastest:null, p2:'Lawan'}, tarik:{plays:0, bestRate:0}, klumba:{plays:0, perfect:0}, serang:{plays:0, blocks:0}, tgk:{unlocked:0, best:{}, plays:0, passedTop:false}, kick:{best:0, bestJet:0, plays:0, mode:'jump'}, lb:{}, lbNames:[], classes:[], curClass:'', sabumPin:''});
 let S = fresh(), storeOK = true;
 try {
   const raw = localStorage.getItem(KEY);
@@ -396,7 +396,7 @@ function viewHome(){
           <span style="font-weight:600">${fmt(S.xp)}${r.next ? ' / '+fmt(r.next.xp) : ''}</span>
         </div>
         <div class="bar"><i style="width:${r.pct}%"></i></div>
-        <span class="muted" style="font-size:12px">Pangkat Arena: <b style="color:var(--ink)">${r.cur.nm}</b> · berasingan daripada tali pinggang sebenar</span>
+        <span class="muted" style="font-size:12px">Pangkat Arena: <b>${r.cur.nm}</b> · berasingan daripada tali pinggang sebenar</span>
       </div>
       <div class="tiles">
         <div class="tile"><span class="k">STREAK</span><span class="v" style="display:flex;align-items:center;gap:4px">${ic('flame','#0a0a0a',16)}${dayStreak(S)}<small> hari</small></span></div>
@@ -912,6 +912,7 @@ function viewTetapan(confirm){
   app.innerHTML = header() + `<main>
     <div class="ptitle"><h1>Tetapan</h1></div>
     ${langPicker()}
+    ${themePicker()}
     <section class="card" style="padding:0;overflow:hidden">
       <h2 style="padding:16px 20px 6px;font-size:16px;font-weight:700">Bunyi dan getaran</h2>
       ${sw('tSound', st.sound, 'Bunyi', 'Nada dalam Ikut Sabum dan Flying Kick Dash')}
@@ -943,9 +944,10 @@ function viewTetapan(confirm){
         : '<button class="btn g" id="askReset">Padam semua data</button>'}
     </section>
     ${ctaCard()}
-    <p class="muted" style="margin:0;text-align:center;font-size:12px">MIQ Arena v1.0 · MIQ Taekwon-Do Academy</p>
+    <p class="muted" style="margin:0;text-align:center;font-size:12px">MIQ Arena v${typeof APP_VER !== 'undefined' ? APP_VER : ''} · MIQ Taekwon-Do Academy</p>
   </main>` + nav('profil');
   bindLang(() => viewTetapan());
+  app.querySelectorAll('[data-theme-set]').forEach(b => b.onclick = () => { st.theme = b.dataset.themeSet; save(); applyTheme(); const y = window.scrollY; viewTetapan(); window.scrollTo(0, y); });
   document.getElementById('tSound').onclick = () => { st.sound = !st.sound; save(); viewTetapan(); };
   document.getElementById('tVib').onclick = () => { st.vib = !st.vib; save(); if (st.vib) buzz(30); viewTetapan(); };
   const di = document.getElementById('doInstall');
@@ -954,6 +956,20 @@ function viewTetapan(confirm){
   const n = document.getElementById('noReset'); if (n) n.onclick = () => viewTetapan(false);
   const y = document.getElementById('yesReset'); if (y) y.onclick = () => { S = fresh(); save(); location.hash = 'profil'; route(); };
   window.scrollTo(0,0);
+}
+
+// ================= Tema (cerah / gelap / ikut telefon) =================
+const darkMQ = window.matchMedia ? matchMedia('(prefers-color-scheme: dark)') : null;
+function applyTheme(){
+  const t = S.settings.theme || 'auto', dark = t === 'dark' || (t === 'auto' && !!(darkMQ && darkMQ.matches));
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+}
+if (darkMQ && darkMQ.addEventListener) darkMQ.addEventListener('change', applyTheme);
+function themePicker(){
+  const t = S.settings.theme || 'auto', b = (v, l) => `<button type="button" class="chip ${t===v?'on':''}" data-theme-set="${v}" aria-pressed="${t===v}">${l}</button>`;
+  return `<section class="card" style="display:flex;flex-direction:column;gap:10px">
+    <h2 style="font-size:16px;font-weight:700">Tema</h2>
+    <div class="seg">${b('light','Cerah')}${b('dark','Gelap')}${b('auto','Ikut telefon')}</div></section>`;
 }
 
 // ================= Pilihan bahasa =================
