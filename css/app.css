@@ -461,3 +461,11 @@ nav.bn svg{width:18px;height:18px}
 .fkkiai{min-height:64px;border-radius:14px;border:2px solid var(--y);background:#1a1a1a;color:var(--y);font-size:20px;font-weight:900;letter-spacing:.06em;display:flex;align-items:center;justify-content:center;gap:10px;touch-action:none}
 .fkkiai small{font-size:13px;font-weight:600;opacity:.8}
 .fkkiai.ready{background:linear-gradient(180deg,var(--y1),var(--y));color:#0a0a0a;box-shadow:var(--glow)}
+/* Gambar preview kad game (js/art.js) */
+.art{display:block;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#0a0a0a;flex:none}
+.art svg{display:block;width:100%;height:100%}
+.gcard.soon .art{filter:grayscale(1);opacity:.45}
+.mpcard .art{box-shadow:0 0 0 1px rgba(255,255,255,.25)}
+.mpbig .art{width:112px}
+.grid2 > .gcard:last-child:nth-child(odd) .art{aspect-ratio:32/9}
+.mpcard .vs{z-index:1}

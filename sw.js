@@ -1,10 +1,11 @@
 // MIQ Arena — service worker: simpan fail app supaya boleh dibuka tanpa internet.
 // Tukar VERSION setiap kali kod dikemas kini supaya telefon pemain dapat versi baharu.
-const VERSION = 'miq-arena-v1.7.0';
+const VERSION = 'miq-arena-v1.8.0';
 const SHELL = [
   "./",
   "index.html",
   "css/app.css",
+  "js/art.js",
   "js/core.js",
   "js/i18n.js",
   "js/main.js",

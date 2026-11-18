@@ -423,15 +423,15 @@ function viewHome(){
 const mpStat = g => S[g.store].plays ? S[g.store].plays+' perlawanan' : 'Belum dimain';
 function mpCards(big){
   return GAMES.filter(g => g.mp).map(g => `<a class="mpcard ${big?'mpbig':''}" href="#${g.id}"><span class="vs">VS</span>
-    <span class="ic">${ic(g.icon,'#0a0a0a')}</span>
+    ${art(g.id)}
     ${big ? `<span class="txt"><b>${g.nm}</b><span class="d">${g.d}</span>${whyTags(g, true)}<span class="d" style="font-weight:600">${mpStat(g)}</span></span>` : `<b>${g.nm}</b><span class="d">${g.d}</span>${whyTags(g, true)}<span class="pill">2 pemain</span>`}
   </a>`).join('');
 }
 const mpHead = (t, link) => `<div class="sechead"><div class="mphead"><span class="dots" aria-hidden="true"><span style="background:var(--hong)"></span><span style="background:var(--chong)"></span></span><h2>${t}</h2></div>${link ? `<a href="#berdua" style="font-size:13px;font-weight:600">Lihat semua ›</a>` : ''}</div>`;
 function gameCards(){
   return GAMES.filter(g => !g.mp).map(g => g.ready
-    ? `<a class="gcard" href="#${g.id}"><span class="ic">${ic(g.icon,'#0a0a0a')}</span><b>${g.nm}</b><span class="d">${g.d}</span>${whyTags(g)}<span class="pill dark-p">${g.mp ? '2 pemain' : g.id==='run' ? (S.run.best ? 'Rekod '+fmt(S.run.best)+' m' : 'Baharu!') : g.id==='kick' ? (S.kick.best ? 'Rekod '+S.kick.best : 'Baharu!') : S[g.store].passedTop ? 'Semua lulus' : 'Tahap '+Math.min(S[g.store].unlocked+1,levelsOf(g.id).length)+'/'+levelsOf(g.id).length}</span></a>`
-    : `<div class="gcard soon"><span class="ic">${ic(g.icon,'#6b6b70')}</span><b class="muted">${g.nm}</b><span class="d">${g.d}</span>${whyTags(g)}<span class="pill" style="color:var(--muted)">${ic('lock','#6b6b70',12)}Akan datang</span></div>`
+    ? `<a class="gcard" href="#${g.id}">${art(g.id)}<b>${g.nm}</b><span class="d">${g.d}</span>${whyTags(g)}<span class="pill dark-p">${g.mp ? '2 pemain' : g.id==='run' ? (S.run.best ? 'Rekod '+fmt(S.run.best)+' m' : 'Baharu!') : g.id==='kick' ? (S.kick.best ? 'Rekod '+S.kick.best : 'Baharu!') : S[g.store].passedTop ? 'Semua lulus' : 'Tahap '+Math.min(S[g.store].unlocked+1,levelsOf(g.id).length)+'/'+levelsOf(g.id).length}</span></a>`
+    : `<div class="gcard soon">${art(g.id)}<b class="muted">${g.nm}</b><span class="d">${g.d}</span>${whyTags(g)}<span class="pill" style="color:var(--muted)">${ic('lock','#6b6b70',12)}Akan datang</span></div>`
   ).join('');
 }
 function viewGames(){

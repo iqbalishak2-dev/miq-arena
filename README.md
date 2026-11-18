@@ -16,6 +16,7 @@ Ciri lain: profil (nama panggilan), XP dan Pangkat Arena, lencana, Cabaran Haria
 index.html              Halaman utama (meta, pratonton WhatsApp, muat skrip)
 css/app.css             Semua gaya (kuning + hitam)
 js/core.js              Data, simpanan, navigasi, laman utama, rekod, profil, tetapan, cabaran harian
+js/art.js               Gambar preview (SVG) untuk kad setiap game
 js/games/*.js           Satu fail untuk setiap game
 js/main.js              Mula app + daftar service worker
 sw.js                   Simpanan luar talian (tukar VERSION setiap kali kemas kini)
@@ -55,6 +56,6 @@ Setiap kali kod ditukar, naikkan `VERSION` dalam `sw.js` (contohnya `miq-arena-v
 ## Tambah game baharu
 
 1. Buat `js/games/namagame.js` (ikut corak fail sedia ada: `viewX`, `startX`, `xFinish`).
-2. Tambah entri dalam `GAMES` (`js/core.js`) dan laluan dalam `route()`.
+2. Tambah entri dalam `GAMES` (`js/core.js`) dan laluan dalam `route()`. Tambah gambar preview dalam `ART_SVG` (`js/art.js`).
 3. Tambah `<script>` dalam `index.html` dan nama fail dalam `SHELL` di `sw.js`.
 4. Jalankan `node scripts/check.mjs`.
