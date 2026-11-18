@@ -1,4 +1,6 @@
 // MIQ Arena — permulaan app (dimuatkan selepas core.js dan semua fail game)
+// Tukar APP_VER setiap kali keluarkan versi baru (sama dengan VERSION dalam sw.js). Mesti sebelum route().
+const APP_VER = '1.11.0';
 applyTheme();
 route();
 applyLang();
@@ -22,8 +24,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 }
 
 // ================= Notifikasi kemas kini =================
-// Tukar APP_VER dan WHATS_NEW setiap kali keluarkan versi baru (sama dengan VERSION dalam sw.js).
-const APP_VER = '1.11.0';
+// Tukar WHATS_NEW setiap kali keluarkan versi baru.
 const WHATS_NEW = [
   'Tema gelap! Pilih Cerah, Gelap atau Ikut telefon dalam Tetapan',
   'Flying Kick Dash: mod Terbang baharu. Tahan untuk terbang, kutip bintang dan elak Hong!',
