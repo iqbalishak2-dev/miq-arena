@@ -2,6 +2,7 @@
 
 // ================= Ikon (Lucide) =================
 const I = {
+  share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/>',
   zap:'<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>',
   list:'<path d="M10 6h11M10 12h11M10 18h11M4 6h1v4M4 10h2M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/>',
   lang:'<path d="m5 8 6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/>',
@@ -66,8 +67,17 @@ const GAMES = [
 const whyTags = (g, dark) => g.why ? `<span class="why ${dark?'dk':''}">${g.why.map(t => `<i>${t}</i>`).join('')}</span>` : '';
 function whyBox(id){
   const g = GAMES.find(x => x.id === id); if (!g || !g.why) return '';
-  return `<section class="card whybox"><span class="label">Kenapa main game ini?</span>${whyTags(g)}<p>${esc(g.wd)}</p></section>`;
+  return `<section class="card whybox"><span class="label">Kenapa main game ini?</span>${whyTags(g)}<p>${esc(g.wd)}</p>
+    <button class="btn g sharebtn" data-share="${g.id}">${ic('share','#0a0a0a',16)}Kongsi game ini</button></section>`;
 }
+// Kongsi link /g/<id> (ada gambar preview sendiri di WhatsApp)
+function shareGame(id){
+  const g = GAMES.find(x => x.id === id); if (!g) return;
+  const url = location.origin + '/g/' + id, text = 'Jom main ' + g.nm + ' di MIQ Arena!';
+  if (navigator.share) navigator.share({title: g.nm, text, url}).catch(() => {});
+  else window.open('https://wa.me/?text=' + encodeURIComponent(text + ' ' + url), '_blank', 'noopener');
+}
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-share]'); if (b) shareGame(b.dataset.share); });
 const LEVELS = [
   {id:'putih', nm:'Putih',  col:'#ffffff', cues:15, win:1400, pass:750, trap:0,   feint:0,   combo:0,   desc:'Pad biru sahaja'},
   {id:'kuning',nm:'Kuning', col:'#eab308', cues:18, win:1200, pass:680, trap:.15, feint:0,   combo:0,   desc:'Umpan merah mula muncul'},

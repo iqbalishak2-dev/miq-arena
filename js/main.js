@@ -22,7 +22,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 
 // ================= Notifikasi kemas kini =================
 // Tukar APP_VER dan WHATS_NEW setiap kali keluarkan versi baru (sama dengan VERSION dalam sw.js).
-const APP_VER = '1.8.0';
+const APP_VER = '1.9.0';
 const WHATS_NEW = [
   'Game baharu: Flying Kick Dash! Tendang melompat, lalu celah pad dan naikkan tali pinggang',
   'Paparan penuh untuk tablet kecil (contoh Xiaomi/Redmi Pad 8–9 inci)',

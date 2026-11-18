@@ -23,6 +23,9 @@ sw.js                   Simpanan luar talian (tukar VERSION setiap kali kemas ki
 manifest.webmanifest    Maklumat app untuk "Pasang ke skrin utama"
 icons/, og-image.png    Ikon app dan gambar pratonton link
 scripts/check.mjs       Semakan sebelum push
+g/<id>.html             Halaman kongsi setiap game (preview WhatsApp sendiri, terus buka game)
+og/<id>.png             Gambar preview WhatsApp setiap game (1200x630)
+scripts/make-share.mjs  Jana g/ dan og/_render.html dari GAMES + js/art.js
 ```
 
 Tiada langkah build. Semua fail ialah HTML, CSS dan JavaScript biasa.
@@ -59,3 +62,8 @@ Setiap kali kod ditukar, naikkan `VERSION` dalam `sw.js` (contohnya `miq-arena-v
 2. Tambah entri dalam `GAMES` (`js/core.js`) dan laluan dalam `route()`. Tambah gambar preview dalam `ART_SVG` (`js/art.js`).
 3. Tambah `<script>` dalam `index.html` dan nama fail dalam `SHELL` di `sw.js`.
 4. Jalankan `node scripts/check.mjs`.
+5. Jalankan `node scripts/make-share.mjs`, kemudian jana `og/<id>.png` ikut arahan di atas skrip itu.
+
+## Kongsi game
+
+Butang **Kongsi game ini** dalam setiap game menghantar link `/g/<id>`. Halaman itu ada gambar dan tajuk sendiri untuk WhatsApp, kemudian terus membuka game. Jika tukar nama, penerangan atau gambar game, jana semula `g/` dan `og/`. WhatsApp menyimpan preview lama untuk beberapa hari, jadi perubahan mungkin lambat kelihatan.

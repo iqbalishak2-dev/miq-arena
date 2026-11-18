@@ -317,7 +317,7 @@ const I18N = {
   '# teratas setiap game. Disimpan dalam peranti ini sahaja.': 'Top # for each game. Stored on this device only.',
   '# ms': '# ms', '# m': '# m', '#% tepat': '#% accurate', '#/# pecah': '#/# broken', '#/# betul': '#/# correct', '# cubaan': '# tries', '# saat': '# sec',
   '# langkah': '# steps', '# kesilapan': '# mistakes', '#/# disusun': '#/# placed', '#/# ditangkis': '#/# blocked', '# papan': '# boards',
-  'Kenapa main game ini?': 'Why play this game?',
+  'Kenapa main game ini?': 'Why play this game?', 'Kongsi game ini': 'Share this game',
   "Refleks": "Reflexes",
   "Disiplin": "Discipline",
   "Melatih masa reaksi dan kawalan diri. Dalam sparring, kita serang bila ada peluang, bukan setiap kali lawan bergerak.": "Trains reaction time and self-control. In sparring we attack when there is an opening, not every time the opponent moves.",

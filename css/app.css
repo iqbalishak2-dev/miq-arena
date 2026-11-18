@@ -469,3 +469,4 @@ nav.bn svg{width:18px;height:18px}
 .mpbig .art{width:112px}
 .grid2 > .gcard:last-child:nth-child(odd) .art{aspect-ratio:32/9}
 .mpcard .vs{z-index:1}
+.sharebtn{align-self:flex-start;min-height:40px;padding:8px 14px;font-size:14px;margin-top:4px}
